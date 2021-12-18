@@ -28,7 +28,7 @@
 <meta property="og:description" content="Kali  简单优化1.修改网卡1234567891011121314151617#切换root用户sudo su -#修改网卡文件vim &#x2F;etc&#x2F;network&#x2F;interfaceauto eth0iface eth0 inet staticaddress 192.0.0.254netmask 255.255.255.0gateway 192.0.0.1#修改服务systemctl stop">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-11T12:24:42.000Z">
-<meta property="article:modified_time" content="2021-12-11T12:28:51.595Z">
+<meta property="article:modified_time" content="2021-12-18T02:32:45.350Z">
 <meta property="article:author" content="XUE">
 <meta name="twitter:card" content="summary">
 
@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -184,10 +184,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-12-11 20:24:42 / 修改时间：20:28:51" itemprop="dateCreated datePublished" datetime="2021-12-11T20:24:42+08:00">2021-12-11</time>
+      <time title="创建时间：2021-12-11 20:24:42" itemprop="dateCreated datePublished" datetime="2021-12-11T20:24:42+08:00">2021-12-11</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-18 10:32:45" itemprop="dateModified" datetime="2021-12-18T10:32:45+08:00">2021-12-18</time>
+      </span>
 
   
 </div>
@@ -203,7 +209,7 @@
 
 <h5 id="2-更新源"><a href="#2-更新源" class="headerlink" title="2.更新源"></a>2.更新源</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/apt/sources.list</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">中科大</span></span><br><span class="line">deb http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib</span><br><span class="line">deb-src http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">阿里云</span></span><br><span class="line"><span class="meta">#</span><span class="bash">deb http://mirrors.aliyun.com/kali kali-rolling main non-free contrib</span></span><br><span class="line"><span class="meta">#</span><span class="bash">deb-src http://mirrors.aliyun.com/kali kali-rolling main non-free contrib</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">清华大学</span></span><br><span class="line"><span class="meta">#</span><span class="bash">deb http://mirrors.tuna.tsinghua.edu.cn/kali kali-rolling main contrib non-free</span></span><br><span class="line"><span class="meta">#</span><span class="bash">deb-src https://mirrors.tuna.tsinghua.edu.cn/kali kali-rolling main contrib non-free</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">更新索引</span></span><br><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
 
-<h5 id="3-查看版本"><a href="#3-查看版本" class="headerlink" title="3.查看版本"></a>3.查看版本</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">系统版本</span></span><br><span class="line">cat /etc/issue</span><br><span class="line">lsb_release -a     `（推荐）</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">内核信息</span></span><br><span class="line">uname -a</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">版本镜像下载</span></span><br><span class="line">http://old.kali.org/kali-images/     `（推荐）</span><br><span class="line">https://wizardforcel.gitbooks.io/kali-linux-doc/content/36.html   `（官方）</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">版本区别</span></span><br><span class="line">64 bit、32 bit、armhf、armel、i386、rpi等为不同的架构版本</span><br><span class="line">light为轻量版，VMware、virtualBox为虚拟机镜像版本</span><br><span class="line">GNOME、KDE、e17、Mate、LXDE、xfce为不同的桌面环境</span><br><span class="line">注：msf5为2019版</span><br></pre></td></tr></table></figure>
+<h5 id="3-查看版本"><a href="#3-查看版本" class="headerlink" title="3.查看版本"></a>3.查看版本</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">系统版本</span></span><br><span class="line">cat /etc/issue</span><br><span class="line">lsb_release -a     `（推荐）</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">内核信息</span></span><br><span class="line">uname -a</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">版本镜像下载</span></span><br><span class="line">http://old.kali.org/kali-images/     `（推荐）</span><br><span class="line">https://wizardforcel.gitbooks.io/kali-linux-doc/content/36.html   `（官方）</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">版本区别</span></span><br><span class="line">64 bit、32 bit、armhf、armel、i386、rpi等为不同的架构版本</span><br><span class="line">light为轻量版，VMware、virtualBox为虚拟机镜像版本</span><br><span class="line">GNOME、KDE、e17、Mate、LXDE、xfce为不同的桌面环境</span><br><span class="line">注：msf5为2019版</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">版本更新</span></span><br><span class="line">sudo su -</span><br><span class="line">apt update             #更新软件包列表</span><br><span class="line">apt full-upgrade -y    #完全更新</span><br><span class="line">apt dist-upgrade -y    #升级软件包并处理其依赖关系</span><br><span class="line">reboot                 #重启系统</span><br></pre></td></tr></table></figure>
 
 
 
@@ -225,8 +231,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/12/14/Web%E6%B8%97%E9%80%8F%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" rel="next" title="Web渗透之信息收集">
-                  Web渗透之信息收集 <i class="fa fa-chevron-right"></i>
+                <a href="/2021/12/14/Web%E6%B8%97%E9%80%8F%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" rel="next" title="网络安全之信息收集">
+                  网络安全之信息收集 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
