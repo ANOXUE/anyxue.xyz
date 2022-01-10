@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="CSRF(Cross-site request forgery，跨站请求伪造)。CSRF是Web应用程序的一种常见漏洞，其攻击特性是危害性大但非常隐蔽，尤其是在大量Web 2.0技术的应用背景下，攻击者完全可以在用户毫无察觉的情况下发起CSRF攻击。 原理也叫点击攻击(‘on click’)，一般需点击后触发。主要由于程序员开发时，未对请求参数（比如token和referer等）进行判断，造成攻击">
+<meta property="og:type" content="article">
+<meta property="og:title" content="csrf、ssrf和内网渗透">
+<meta property="og:url" content="http://example.com/2021/12/27/csrf%E3%80%81ssrf%E5%92%8C%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/index.html">
+<meta property="og:site_name" content="Phoenix">
+<meta property="og:description" content="CSRF(Cross-site request forgery，跨站请求伪造)。CSRF是Web应用程序的一种常见漏洞，其攻击特性是危害性大但非常隐蔽，尤其是在大量Web 2.0技术的应用背景下，攻击者完全可以在用户毫无察觉的情况下发起CSRF攻击。 原理也叫点击攻击(‘on click’)，一般需点击后触发。主要由于程序员开发时，未对请求参数（比如token和referer等）进行判断，造成攻击">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-27T03:14:08.000Z">
+<meta property="article:modified_time" content="2021-12-29T15:49:56.077Z">
+<meta property="article:author" content="XUE">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/12/27/csrf%E3%80%81ssrf%E5%92%8C%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/12/27/csrf%E3%80%81ssrf%E5%92%8C%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/","path":"2021/12/27/csrf、ssrf和内网渗透/","title":"csrf、ssrf和内网渗透"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>csrf、ssrf和内网渗透 | Phoenix</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Phoenix</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Xue's Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#CSRF"><span class="nav-number">1.</span> <span class="nav-text">CSRF</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">1.3.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%98%B2%E5%BE%A1"><span class="nav-number">1.4.</span> <span class="nav-text">防御</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSRF"><span class="nav-number">2.</span> <span class="nav-text">SSRF</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E7%90%86-1"><span class="nav-number">2.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%98%B2%E8%8C%83"><span class="nav-number">2.3.</span> <span class="nav-text">防范</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F"><span class="nav-number">2.4.</span> <span class="nav-text">内网渗透</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">XUE</p>
+  <div class="site-description" itemprop="description">anyxue</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/27/csrf%E3%80%81ssrf%E5%92%8C%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="XUE">
+      <meta itemprop="description" content="anyxue">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phoenix">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          csrf、ssrf和内网渗透
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-27 11:14:08" itemprop="dateCreated datePublished" datetime="2021-12-27T11:14:08+08:00">2021-12-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2021-12-29 23:49:56" itemprop="dateModified" datetime="2021-12-29T23:49:56+08:00">2021-12-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h4><p>(Cross-site request forgery，跨站请求伪造)。CSRF是Web应用程序的一种常见漏洞，其攻击特性是危害性大但非常隐蔽，尤其是在大量Web 2.0技术的应用背景下，攻击者完全可以在用户毫无察觉的情况下发起CSRF攻击。</p>
+<h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>也叫点击攻击(‘on click’)，一般需点击后触发。主要由于程序员开发时，未对请求参数（比如token和referer等）进行判断，造成攻击者可以构造自己的URL地址并欺骗引诱目标用户点击。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 用户C打开浏览器，访问受信任网站A，输入用户名和密码请求登录网站A；</span><br><span class="line">2.在用户信息通过验证后，网站A产生Cookie信息并返回给浏览器，此时用户登录网站A成功，可以正常发送请求到网站A；</span><br><span class="line">3. 用户未退出网站A之前，在同一浏览器中，打开一个TAB页访问网站B；</span><br><span class="line">4. 网站B接收到用户请求后，返回一些攻击性代码，并发出一个请求要求访问第三方站点A；</span><br><span class="line">5. 浏览器在接收到这些攻击性代码后，根据网站B的请求，在用户不知情的情况下携带Cookie信息，向网站A发出请求。网站A并不知道该请求其实是由B发起的，所以会根据用户C的Cookie信息以C的权限处理该请求，导致来自网站B的恶意代码被执行。</span><br></pre></td></tr></table></figure>
+
+<p>总结特点：</p>
+<p>1、CSRF的攻击建立在浏览器与Web服务器的会话之中。<br>2、欺骗用户访问URL。</p>
+<h5 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h5><p>一般分为站内和站外两种类型。</p>
+<p>csrf站外类型由外部提交数据，通常程序员会考虑给一些留言或者评论的表单加上水印以防止SPAM问题，但是有时为了提高用户的体验性，可能没有对一些操作做任何限制，所以攻击者可以事先预测并设置请求的参数，在站外的Web页面里编写脚本伪造文件请求，或者和自动提交的表单一起使用来实现GET、POST请求，当用户在会话状态下点击链接访问站外Web页面，客户端就被强迫发起请求。</p>
+<p>csrf站内类型一定程度上是由于程序员滥用<code>$_REQUEST</code>类变量造成的。在一些敏感的操作中（如修改密码、添加用户等），本来要求用户从表单提交发起POST请求传递参数给程序，但是由于使用了<code>$_REQUEST</code>等变量，程序除支持接收POST请求传递的参数外也支持接收GET请求传递的参数，这样就会为攻击者使用CSRF攻击创造条件。一般攻击者只要把预测的请求参数放在站内一个贴子或者留言的图片链接里，通过get请求来攻击，受害者浏览了这样的页面就会被强迫发起这些请求。</p>
+<p>通过强迫发送请求，可能导致拖库、网络设备攻击、数据更改、敏感信息泄露等严重危害。</p>
+<h5 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">利用</span></span><br><span class="line">BP(也可以检测) 常配合xss打出组合拳</span><br><span class="line"><span class="meta">#</span><span class="bash">检测</span></span><br><span class="line">awvs、appscan    #可能有误报</span><br><span class="line">CSRFTester、CSRF Request Builder   #相对针对性强</span><br></pre></td></tr></table></figure>
+
+<h5 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">服务端</span></span><br><span class="line">验证HTTP Referer字段</span><br><span class="line">在请求地址中添加token并验证</span><br><span class="line">在HTTP头中自定义属性并验证</span><br><span class="line">在服务端区严格区分POST与GET的数据请求</span><br><span class="line">使用验证码或者密码确认方式进行</span><br><span class="line"><span class="meta">#</span><span class="bash">客户端</span></span><br><span class="line">安装合适的安全防护软件，并及时更新软件厂商发布的特征库，以保持安全软件对最新攻击的实时跟踪</span><br></pre></td></tr></table></figure>
+
+<h4 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h4><p>SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF是要获取目标网站的内部系统。</p>
+<h5 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h5><p>SSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能，且没有对目标地址做过滤与限制。比如从指定URL地址获取网页文本内容，加载指定地址的图片，文档，等等。导致攻击者可以通过篡改获取资源的请求发送给服务器，但是服务器并没有检测这个请求是否合法的，然后服务器以他的身份来访问其他服务器的资源。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e.g. www.a.com/xxx.php?image=www.b.com/1.jpg</span><br></pre></td></tr></table></figure>
+
+<h5 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">常见攻击方式</span></span><br><span class="line">可以对外网、服务器所在内网、本地进行端口扫描，获取一些服务的banner(web服务程序、操作系统等)信息;</span><br><span class="line"></span><br><span class="line">攻击运行在内网或本地的应用程序（比如溢出);</span><br><span class="line"></span><br><span class="line">对内网web应用进行指纹识别，通过访问默认文件实现;</span><br><span class="line"></span><br><span class="line">攻击内外网的web应用，主要是使用get参数就可以实现的攻击（比如struts2，sqli等）;</span><br><span class="line"></span><br><span class="line">利用file协议读取本地文件等。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">常见位置</span></span><br><span class="line">url链接</span><br><span class="line">转码服务</span><br><span class="line">在线翻译</span><br><span class="line">图片加载与下载</span><br><span class="line">图片文章收藏</span><br><span class="line">未公开的api实现以及其他调用url的功能</span><br><span class="line">从url关键字中寻找：share、wap、url、link、src、source、target、u、3g、display、sourceURl、imageURL、domain</span><br></pre></td></tr></table></figure>
+
+<h5 id="防范"><a href="#防范" class="headerlink" title="防范"></a>防范</h5><p>绕过</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">改编格式</span></span><br><span class="line">8、16进制（整数）格式</span><br><span class="line"><span class="meta">#</span><span class="bash">url解析</span></span><br><span class="line">e.g. http://www.a.com@192.168.0.1/</span><br></pre></td></tr></table></figure>
+
+<p>防范</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">过滤（黑名单）</span></span><br><span class="line">ip、协议、敏感响应数据</span><br><span class="line">内网服务开启鉴权</span><br><span class="line"><span class="meta">#</span><span class="bash">白名单</span></span><br><span class="line">固定ip、返回内容识别</span><br></pre></td></tr></table></figure>
+
+<p>dnslog</p>
+<p>在sql注入、ssrf注入等没有回显的时候，我们很难判断出这里是否有漏洞，那么我们就可以通过DNSlog的方式来进行查看</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnslog.cn</span><br><span class="line">e.g. x.x.x.x/pikachu/vul/ssrf/ssrf_url.php?url=x.dnslog.cn</span><br></pre></td></tr></table></figure>
+
+<h5 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h5><p>ew (EarchWorm),又叫“蚯蚓”“毒液”，是一款轻量便携且功能强大的网络穿透工具，基于标准c开发，具有socks5代理，端口转发和端口映射三大功能，可在复杂网络环境下完成网络穿透，且支持全平台，“正向”、“反向”、“多级级联”等方式打通内网。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">模式  -s</span></span><br><span class="line">ssocksd        #正向，socks5</span><br><span class="line">rcsocks        #反向</span><br><span class="line">rssocks        #反向，socks5</span><br><span class="line">lcx_slave      #该管道一侧通过反弹方式连接代理请求方，另一侧连接代理提供主机</span><br><span class="line">lcx_listen     #该管道，通过监听本地端口接收代理请求，并转交给代理提供主机</span><br><span class="line">lcx_tran      #该管道，通过监听本地端口接收数据，并将其转交给目标网络回连的代理提供主机</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">常用参数</span></span><br><span class="line">-l   指定要监听的本地端口</span><br><span class="line">-d   指定要反弹到的机器ip</span><br><span class="line">-e   指定要反弹到的机器端口</span><br><span class="line">-f   指定要主动连接的机器ip</span><br><span class="line">-g   指定要主动连接的机器端口</span><br><span class="line">-t   指定超时时长，默认1000</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/20/%E8%BF%9C%E7%A8%8Bshell%E4%B8%8E%E6%8F%90%E6%9D%83/" rel="prev" title="远程shell与提权">
+                  <i class="fa fa-chevron-left"></i> 远程shell与提权
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XUE</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

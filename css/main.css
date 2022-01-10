@@ -547,6 +547,9 @@ figure.highlight .code pre {
   padding-left: 10px;
   width: 100%;
 }
+figure.highlight .marked {
+  background: rgba(0,0,0,0.3);
+}
 pre .caption,
 pre figcaption {
   margin-bottom: 10px;
@@ -2614,7 +2617,7 @@ ul.breadcrumb li:last-child {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #5cffbf;
+  background: #fffbff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);

