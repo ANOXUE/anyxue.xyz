@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="学习过许多语言基础，C，Java，PHP，可惜学得浅，又无开发经验，至今感觉仍跟没学一样。然本人对python垂涎已久，如今终于天时地利人和，只欠用功。那么就从Python开始，作为我正式步入开发领域的起点。   Python简介先简单说一下python，他由荷兰人Guido van Rossum于1989年发明，第一个公开发行版发行于1991年。是一门面向对象的解释型程序设计语言，具有开发效率高">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python基础">
+<meta property="og:url" content="http://example.com/2022/02/07/Python%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Phoenix">
+<meta property="og:description" content="学习过许多语言基础，C，Java，PHP，可惜学得浅，又无开发经验，至今感觉仍跟没学一样。然本人对python垂涎已久，如今终于天时地利人和，只欠用功。那么就从Python开始，作为我正式步入开发领域的起点。   Python简介先简单说一下python，他由荷兰人Guido van Rossum于1989年发明，第一个公开发行版发行于1991年。是一门面向对象的解释型程序设计语言，具有开发效率高">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s3.bmp.ovh/imgs/2022/02/0eadc851c267701c.jpg">
+<meta property="article:published_time" content="2022-02-07T05:04:41.000Z">
+<meta property="article:modified_time" content="2022-02-21T06:01:57.613Z">
+<meta property="article:author" content="XUE">
+<meta property="article:tag" content="基础篇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2022/02/0eadc851c267701c.jpg">
+
+
+<link rel="canonical" href="http://example.com/2022/02/07/Python%E5%9F%BA%E7%A1%80/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/02/07/Python%E5%9F%BA%E7%A1%80/","path":"2022/02/07/Python基础/","title":"Python基础"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Python基础 | Phoenix</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Phoenix</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Xue's Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">Python简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">2.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99"><span class="nav-number">2.0.1.</span> <span class="nav-text">变量命名规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F"><span class="nav-number">2.0.2.</span> <span class="nav-text">常量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A"><span class="nav-number">2.0.3.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.0.4.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">2.0.5.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#print"><span class="nav-number">2.0.5.1.</span> <span class="nav-text">print</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#input"><span class="nav-number">2.0.5.2.</span> <span class="nav-text">input</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#if"><span class="nav-number">2.0.5.3.</span> <span class="nav-text">if</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#for%E2%80%A6in%E2%80%A6"><span class="nav-number">2.0.5.4.</span> <span class="nav-text">for…in…</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#while"><span class="nav-number">2.0.5.5.</span> <span class="nav-text">while</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#break"><span class="nav-number">2.0.5.6.</span> <span class="nav-text">break</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#continue"><span class="nav-number">2.0.5.7.</span> <span class="nav-text">continue</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#list"><span class="nav-number">2.0.5.8.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#tuple"><span class="nav-number">2.0.5.9.</span> <span class="nav-text">tuple</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#dict"><span class="nav-number">2.0.5.10.</span> <span class="nav-text">dict</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#set"><span class="nav-number">2.0.5.11.</span> <span class="nav-text">set</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">XUE</p>
+  <div class="site-description" itemprop="description">anyxue</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/07/Python%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="XUE">
+      <meta itemprop="description" content="anyxue">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phoenix">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python基础
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-07 13:04:41" itemprop="dateCreated datePublished" datetime="2022-02-07T13:04:41+08:00">2022-02-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-21 14:01:57" itemprop="dateModified" datetime="2022-02-21T14:01:57+08:00">2022-02-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>学习过许多语言基础，C，Java，PHP，可惜学得浅，又无开发经验，至今感觉仍跟没学一样。然本人对python垂涎已久，如今终于天时地利人和，只欠用功。那么就从Python开始，作为我正式步入开发领域的起点。</p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/02/0eadc851c267701c.jpg"></p>
+<hr>
+<h3 id="Python简介"><a href="#Python简介" class="headerlink" title="Python简介"></a>Python简介</h3><p>先简单说一下python，他由荷兰人Guido van Rossum于1989年发明，第一个公开发行版发行于1991年。是一门面向对象的解释型程序设计语言，具有开发效率高，跨平台，简单易学等优点。从设计之初就致力提升代码的可阅读性，崇尚优美、简单和清晰。强制缩进是python的一大特色，这点在3.x源码中有明显的体现。而且由于python易于嵌入和移植的特性，使他非常适合作为一种脚本语言，除了应用于开发领域，还能很好地契合运维和网络安全等领域的相关需求。</p>
+<p>由于身为解释型语言，python更适合开发应用程序。应用python的知名企业：Youtube、Dropbox、BT、Quora（中国知乎）、豆瓣、知乎、Google、Yahoo!、Facebook、NASA、百度、腾讯、汽车之家、美团等。</p>
+<p>python目前主要有四种解释器：</p>
+<ul>
+<li>Cpython：官方推荐解释器。可以转化成C语言能识别的字节码</li>
+<li>Jython: 可以转化成Java语言能识别的字节码</li>
+<li>IronPython：可以转化成.net语言能识别的字节码</li>
+<li>PyPy: 动态编译，可以显著提高Python代码的执行速度</li>
+</ul>
+<h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>基于python3</p>
+<h5 id="变量命名规则"><a href="#变量命名规则" class="headerlink" title="变量命名规则"></a>变量命名规则</h5><ul>
+<li>全部书由数字、字母和下划线组成</li>
+<li>不能以数字开头</li>
+<li>不能是python内置语法函数</li>
+<li>不能使用中文（但是有拼音啊~ 有兴趣的童鞋还可以了解一下”草莽“）</li>
+<li>不能过长</li>
+<li>要具有描述性</li>
+</ul>
+<h5 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h5><p>在python中，用名称大写的变量表示常量</p>
+<h5 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h5><ul>
+<li>单行注释符：#</li>
+<li>多行注释符：’’’neirong’’’  或者  “””内容”””</li>
+</ul>
+<h5 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h5><ul>
+<li>int（整数型）：值为整数</li>
+<li>float（浮点型）：值含小数点</li>
+<li>str（字符型）：值为任意字符串，且需加引号</li>
+<li>bool（布尔型）：值为True 或 False</li>
+</ul>
+<h5 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h5><h6 id="print"><a href="#print" class="headerlink" title="print"></a>print</h6><blockquote>
+<p>输出</p>
+</blockquote>
+<p><code>print</code>函数默认相邻值之间用空格分隔，设置<code>sep</code>属性可修改分隔符，打印内容结尾默认为换行符，设置<code>end</code>属性可替换末尾结束符，设置file属性可修改默认输出文件流（sys.stdout）</p>
+<h6 id="input"><a href="#input" class="headerlink" title="input"></a>input</h6><blockquote>
+<p> 输入</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># input 缺省值为字符型</span></span><br><span class="line">username = <span class="built_in">input</span>(<span class="string">&#x27;用户名：&#x27;</span>)</span><br><span class="line">password = <span class="built_in">input</span>(<span class="string">&#x27;密码：&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(username,<span class="built_in">type</span>(username))</span><br><span class="line"><span class="comment">#raw_input 捕获键盘字符</span></span><br><span class="line">a = raw_input()</span><br><span class="line"><span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
+
+<h6 id="if"><a href="#if" class="headerlink" title="if"></a>if</h6><blockquote>
+<p>流程判断控制</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#单独if</span></span><br><span class="line"><span class="keyword">if</span> <span class="number">2</span> &gt; <span class="number">1</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">2</span> &gt; <span class="number">1</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;yes&#x27;</span>)</span><br><span class="line"><span class="comment">#加else</span></span><br><span class="line"><span class="keyword">if</span> <span class="number">2</span> &lt; <span class="number">1</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">2</span>)</span><br><span class="line"><span class="comment">#加elif</span></span><br><span class="line">a = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&#x27;输入一个数&#x27;</span>))</span><br><span class="line"><span class="keyword">if</span> a == <span class="number">1</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">111</span>)</span><br><span class="line"><span class="keyword">elif</span> a == <span class="number">2</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">222</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">333</span>)</span><br><span class="line"><span class="comment">#嵌套if</span></span><br><span class="line"><span class="keyword">if</span> <span class="number">2</span> &gt; <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="number">1</span> = <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<h6 id="for…in…"><a href="#for…in…" class="headerlink" title="for…in…"></a>for…in…</h6><blockquote>
+<p>for循环</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#0到10整数之和</span></span><br><span class="line"><span class="built_in">sum</span> = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">11</span>):</span><br><span class="line">    <span class="built_in">sum</span> = x + <span class="built_in">sum</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sum</span>)</span><br></pre></td></tr></table></figure>
+
+<h6 id="while"><a href="#while" class="headerlink" title="while"></a>while</h6><blockquote>
+<p>while循环</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#0到10整数之和</span></span><br><span class="line"><span class="built_in">sum</span> = <span class="number">0</span></span><br><span class="line">n = <span class="number">10</span></span><br><span class="line"><span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">    <span class="built_in">sum</span> = <span class="built_in">sum</span> + n</span><br><span class="line">    n = n - <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sum</span>)</span><br></pre></td></tr></table></figure>
+
+<h6 id="break"><a href="#break" class="headerlink" title="break"></a>break</h6><blockquote>
+<p>结束循坏</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> n &lt;= <span class="number">100</span>:</span><br><span class="line">    <span class="keyword">if</span> n &gt; <span class="number">10</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="built_in">print</span>(n)</span><br><span class="line">    n = n + <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;end&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h6 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h6><blockquote>
+<p>跳过循环</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> n &lt; <span class="number">10</span>:</span><br><span class="line">    n = n + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="built_in">print</span>(n)</span><br></pre></td></tr></table></figure>
+
+<h6 id="list"><a href="#list" class="headerlink" title="list"></a>list</h6><blockquote>
+<p>有序列表</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">n = [<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(n[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(n[<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(n[-<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(n))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(n) - <span class="number">1</span>)</span><br><span class="line"><span class="comment">#插入元素</span></span><br><span class="line">n.apped(<span class="string">&#x27;s&#x27;</span>)   <span class="comment">#末尾追加元素</span></span><br><span class="line">n.insert(<span class="number">1</span>,<span class="string">&#x27;z&#x27;</span>)    <span class="comment">#指定索引1位置插入元素</span></span><br><span class="line"><span class="comment">#删除元素</span></span><br><span class="line">n.pop(<span class="number">1</span>)    <span class="comment">#删除索引1的元素</span></span><br><span class="line">n.pop()   <span class="comment">#默认删除末尾元素</span></span><br><span class="line"><span class="comment">#修改元素</span></span><br><span class="line">n[<span class="number">1</span>] = <span class="string">&#x27;p&#x27;</span></span><br><span class="line"><span class="comment">#列表元素也可以是列表</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h6><blockquote>
+<p>元组</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">n = (<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>)</span><br><span class="line"><span class="comment">#tuple元素不可变</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h6><blockquote>
+<p>字典</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#数据集格式：key-value</span></span><br><span class="line">n = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>,<span class="string">&#x27;c&#x27;</span>:<span class="number">3</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(n[<span class="string">&#x27;a&#x27;</span>])</span><br><span class="line"><span class="comment">#插入key/修改value</span></span><br><span class="line">n[<span class="string">&#x27;d&#x27;</span>] = <span class="number">4</span></span><br><span class="line">n[<span class="string">&#x27;a&#x27;</span>] = <span class="number">5</span></span><br><span class="line"><span class="built_in">print</span>(n[<span class="string">&#x27;d&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(n[<span class="string">&#x27;a&#x27;</span>])</span><br><span class="line"><span class="comment">#删除key</span></span><br><span class="line">n.pop(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;a&#x27;</span> <span class="keyword">in</span> n)</span><br><span class="line"><span class="built_in">print</span>(n)</span><br><span class="line"><span class="comment">#key不存在返回指定值</span></span><br><span class="line"><span class="built_in">print</span>(n.get(<span class="string">&#x27;a&#x27;</span>,-<span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span>(n.get(<span class="string">&#x27;a&#x27;</span>))         <span class="comment">#默认None</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="set"><a href="#set" class="headerlink" title="set"></a>set</h6><blockquote>
+<p>无序无重复集</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#和dict的区别在于没有value</span></span><br><span class="line">n = <span class="built_in">set</span>([<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line"><span class="built_in">print</span>(n)</span><br><span class="line"><span class="comment">#添加元素</span></span><br><span class="line">n.add(<span class="number">4</span>)</span><br><span class="line"><span class="built_in">print</span>(n)</span><br><span class="line"><span class="comment">#删除元素</span></span><br><span class="line">n.remove(<span class="number">4</span>)</span><br><span class="line"><span class="built_in">print</span>(n)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80%E7%AF%87/" rel="tag"># 基础篇</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/27/csrf%E3%80%81ssrf%E5%92%8C%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" rel="prev" title="csrf、ssrf和内网渗透">
+                  <i class="fa fa-chevron-left"></i> csrf、ssrf和内网渗透
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/02/08/rdp%E4%BC%A0%E8%BE%93%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" rel="next" title="rdp传输的一些问题">
+                  rdp传输的一些问题 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XUE</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

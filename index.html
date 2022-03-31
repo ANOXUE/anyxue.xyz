@@ -118,18 +118,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -158,6 +158,676 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/31/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="XUE">
+      <meta itemprop="description" content="anyxue">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phoenix">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/31/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">应急响应基础（）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-03-31 14:45:33 / 修改时间：14:55:22" itemprop="dateCreated datePublished" datetime="2022-03-31T14:45:33+08:00">2022-03-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">网络安全</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="应急响应基础"><a href="#应急响应基础" class="headerlink" title="应急响应基础"></a>应急响应基础</h3><h5 id="Windows排查思路"><a href="#Windows排查思路" class="headerlink" title="Windows排查思路"></a>Windows排查思路</h5><p>1.文件排查 </p>
+<p>文件时间<br>Windows：创建时间，修改时间，访问时间<br>Linux：stat指令<br>状态时间（ctime）    ls -lc<br>修改时间（mtime）   ls -l<br>访问时间（atime）</p>
+<h6 id="敏感目录"><a href="#敏感目录" class="headerlink" title="敏感目录"></a>敏感目录</h6><p>temp appdata windows localappdata</p>
+<h6 id="隐藏文件"><a href="#隐藏文件" class="headerlink" title="隐藏文件"></a>隐藏文件</h6><p>recent文件夹</p>
+<h6 id="预读取文件"><a href="#预读取文件" class="headerlink" title="预读取文件"></a>预读取文件</h6><p>windows/prefetch</p>
+<p>2.系统排查</p>
+<h6 id="账户"><a href="#账户" class="headerlink" title="账户"></a>账户</h6><p>user$ 隐藏账户 </p>
+<p>本地用户和组查看：lusrmgr.msc<br>wmic useraccount get name</p>
+<h6 id="启动项"><a href="#启动项" class="headerlink" title="启动项"></a>启动项</h6><p>本地组策略：gpedit.msc           Windows设置-脚本-启动<br>msinfo32       软件环境-启动程序<br>msconfig<br>计划任务<br>控制面版-系统安全-计划任务<br>schtasks</p>
+<p>3.进程排查</p>
+<p>4.服务排查</p>
+<h6 id="Windows日志："><a href="#Windows日志：" class="headerlink" title="Windows日志："></a>Windows日志：</h6><p>系统日志<br>安全日志：<br>ID<br>4624 成功      4625 失败<br>登录类型<br>2 交互式登录（Interactive）<br>3 网络（Network）<br>4 批处理（Batch）<br>5 服务（Service）<br>7 解锁（Unlock）<br>8 网络明文（NetworkCleartext）<br>9 新凭证（NewCredentials）<br>10 远程交互（RemoteInteractive）<br>11 缓存交互（CachedInteractive）<br>Microsoft-Windows-TerminalServices-LocalSessionManager 登录会话日志</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/31/docker%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="XUE">
+      <meta itemprop="description" content="anyxue">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phoenix">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/31/docker%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">docker安装与使用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-03-31 13:35:10 / 修改时间：14:24:16" itemprop="dateCreated datePublished" datetime="2022-03-31T13:35:10+08:00">2022-03-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3/" itemprop="url" rel="index"><span itemprop="name">运维相关</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Docker简介"><a href="#Docker简介" class="headerlink" title="Docker简介"></a>Docker简介</h3><ul>
+<li>开源容器引擎，诞生于2013年初，基于go语言实现</li>
+<li>对容器cgroup、namespace等底层技术进行了封装抽象</li>
+<li>简单便捷，主流IT厂商支持</li>
+<li>搭建靶场环境极其方便，适合网络安全人员研究，比如<a target="_blank" rel="noopener" href="https://vulhub.org/">vulhub</a></li>
+</ul>
+<h5 id="docker组件"><a href="#docker组件" class="headerlink" title="docker组件"></a>docker组件</h5><ul>
+<li>镜像（Image）</li>
+<li>容器（Container）</li>
+<li>仓库（Repository）<ul>
+<li>最大的公开仓库<a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Hub</a></li>
+<li>国内公开仓库<a target="_blank" rel="noopener" href="https://hub.tenxcloud.com/">时速云</a>、<a target="_blank" rel="noopener" href="https://c.163.com/hub">网易云</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub">vulhub项目漏洞环境</a></li>
+</ul>
+</li>
+</ul>
+<h5 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h5><p>官方脚本安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL get.docker.com -0 get-docker.sh</span><br><span class="line">sudo sh get-docker.sh --mirror Aliyun</span><br></pre></td></tr></table></figure>
+
+<p>yum安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">卸载旧版本</span><br><span class="line">yum remove docker docker-common docker-selinux docker-engine</span><br><span class="line">安装依赖</span><br><span class="line">yum install -y yun-utils.noarch device-mapper-persistent-data.x86_64 lvm2</span><br><span class="line">设置docker源</span><br><span class="line">yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line">安装最新版docker</span><br><span class="line">yum install docker-ce docker-ce-cli containerd.io </span><br></pre></td></tr></table></figure>
+
+<h5 id="docker-compose安装"><a href="#docker-compose安装" class="headerlink" title="docker-compose安装"></a>docker-compose安装</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install python3 -y</span><br><span class="line">curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py</span><br><span class="line">python3 get-pip.py</span><br><span class="line">pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple docker-compose</span><br></pre></td></tr></table></figure>
+
+<h5 id="docker常用命令"><a href="#docker常用命令" class="headerlink" title="docker常用命令"></a>docker常用命令</h5><p>镜像操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker search xx	#查找xx镜像</span><br><span class="line">docker pull xx		#获取xx镜像</span><br><span class="line">docker images		#查看当前的镜像</span><br><span class="line">docker rmi $(docker images -q)  #删除所有镜像</span><br></pre></td></tr></table></figure>
+
+<p>容器操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a	#查看所有容器</span><br><span class="line">docker ps -a --no-trunc	#查看所有容器COMMAND ID</span><br><span class="line">docker run -t -i centos /bin/bash #启动镜像</span><br><span class="line">docker start/stop/rm COMMAND ID		#启动/停止/删除指定容器</span><br><span class="line">docker rm $(docker ps -aq)		#删除所有容器</span><br></pre></td></tr></table></figure>
+
+<h5 id="docker-compose常用命令"><a href="#docker-compose常用命令" class="headerlink" title="docker-compose常用命令"></a>docker-compose常用命令</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d		#构建并启动至后台</span><br><span class="line">docker-compose ps			#列出项目所有容器</span><br><span class="line">docker-compose top			#列出容器进程</span><br><span class="line">docker-compose down			#停止所有容器并移除网络</span><br><span class="line">docker-compose rm -fv		#删除所有容器（强制、磁盘挂载数据）</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/31/CentOS%E9%83%A8%E7%BD%B2%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="XUE">
+      <meta itemprop="description" content="anyxue">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phoenix">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/31/CentOS%E9%83%A8%E7%BD%B2%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">CentOS部署优化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-03-31 13:14:08 / 修改时间：13:26:38" itemprop="dateCreated datePublished" datetime="2022-03-31T13:14:08+08:00">2022-03-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3/" itemprop="url" rel="index"><span itemprop="name">运维相关</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="CentOS优化"><a href="#CentOS优化" class="headerlink" title="CentOS优化"></a>CentOS优化</h3><h5 id="ssh优化"><a href="#ssh优化" class="headerlink" title="ssh优化"></a>ssh优化</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/ssh/sshd_config</span><br><span class="line">79行：GSSAPIAuthentication no</span><br><span class="line">115行：UseDNS no</span><br><span class="line">systemctl restart sshd</span><br></pre></td></tr></table></figure>
+
+<h5 id="selinux优化"><a href="#selinux优化" class="headerlink" title="selinux优化"></a>selinux优化</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">修改配置文件，永久关闭</span></span><br><span class="line">vi /etc/selinux/config</span><br><span class="line"><span class="meta">#</span><span class="bash">第7行修改为</span></span><br><span class="line">SELINUX=disabled</span><br><span class="line">需要重启生效</span><br><span class="line"><span class="meta">#</span><span class="bash">立即生效，临时的</span></span><br><span class="line">setenforce 0</span><br></pre></td></tr></table></figure>
+
+<h5 id="优化yum源"><a href="#优化yum源" class="headerlink" title="优化yum源"></a>优化yum源</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br></pre></td></tr></table></figure>
+
+<h5 id="服务优化"><a href="#服务优化" class="headerlink" title="服务优化"></a>服务优化</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">关闭firewalld防火墙</span></span><br><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br><span class="line"><span class="meta">#</span><span class="bash">关闭NetworkManager服务</span></span><br><span class="line">systemctl stop NetworkManager</span><br><span class="line">systemctl disable NetworkManger</span><br></pre></td></tr></table></figure>
+
+<h5 id="安装常用软件"><a href="#安装常用软件" class="headerlink" title="安装常用软件"></a>安装常用软件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install lrzsz vim tree wget net-tools screen tcpdump bash-completion -y</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/18/Python%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="XUE">
+      <meta itemprop="description" content="anyxue">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phoenix">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/18/Python%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">Python函数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-18 16:07:19" itemprop="dateCreated datePublished" datetime="2022-02-18T16:07:19+08:00">2022-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-21 17:24:21" itemprop="dateModified" datetime="2022-02-21T17:24:21+08:00">2022-02-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="Python3常用函数"><a href="#Python3常用函数" class="headerlink" title="Python3常用函数"></a>Python3常用函数</h4><h5 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h5><h6 id="int"><a href="#int" class="headerlink" title="int()"></a>int()</h6><blockquote>
+<p>将数值转换为整数</p>
+</blockquote>
+<h6 id="float"><a href="#float" class="headerlink" title="float()"></a>float()</h6><blockquote>
+<p>将数值转换为浮点数</p>
+</blockquote>
+<h6 id="str"><a href="#str" class="headerlink" title="str()"></a>str()</h6><blockquote>
+<p>将数值转为为字符串类型</p>
+</blockquote>
+<h6 id="bool"><a href="#bool" class="headerlink" title="bool()"></a>bool()</h6><blockquote>
+<p>将数值转换为布尔类型</p>
+</blockquote>
+<h6 id="complex"><a href="#complex" class="headerlink" title="complex()"></a>complex()</h6><blockquote>
+<p>将数值转换为复数形式</p>
+</blockquote>
+<h6 id="dict"><a href="#dict" class="headerlink" title="dict()"></a>dict()</h6><blockquote>
+<p>将二维数列转换为字典</p>
+</blockquote>
+<h6 id="tuple-iterable"><a href="#tuple-iterable" class="headerlink" title="tuple(iterable)"></a>tuple(iterable)</h6><blockquote>
+<p>将序列转换为元组</p>
+</blockquote>
+<h5 id="数学类"><a href="#数学类" class="headerlink" title="数学类"></a>数学类</h5><h6 id="abs-x"><a href="#abs-x" class="headerlink" title="abs(x)"></a>abs(x)</h6><blockquote>
+<p>返回x的绝对值</p>
+</blockquote>
+<h6 id="max"><a href="#max" class="headerlink" title="max()"></a>max()</h6><blockquote>
+<p>返回最大值</p>
+</blockquote>
+<h6 id="min"><a href="#min" class="headerlink" title="min()"></a>min()</h6><blockquote>
+<p>返回最小值</p>
+</blockquote>
+<p><code>max/min(iterable,key)</code> <!--key是一个函数f(a)，用来获取iterable中每个元素键，最终对键值进行比对--></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">e.g. <span class="built_in">max</span>(<span class="string">&#x27;aaa&#x27;</span>, <span class="string">&#x27;bb&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, key=<span class="keyword">lambda</span> a: <span class="built_in">len</span>(a))==<span class="string">&#x27;aaa&#x27;</span></span><br><span class="line"></span><br><span class="line">e.g. <span class="built_in">min</span>(<span class="number">1</span>,<span class="number">2</span>,-<span class="number">333</span>,<span class="number">90</span>,key=<span class="built_in">abs</span>)==<span class="string">&#x27;-333&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="divmod-x-y"><a href="#divmod-x-y" class="headerlink" title="divmod(x, y)"></a>divmod(x, y)</h6><blockquote>
+<p>返回x除以y的商和余数</p>
+</blockquote>
+<h6 id="eval-x-globals-None-locals-None"><a href="#eval-x-globals-None-locals-None" class="headerlink" title="eval(x, globals=None, locals=None)"></a>eval(x, globals=None, locals=None)</h6><blockquote>
+<p>返回x表达式的计算结果（x为字符串或compile类型），globals和locals为可选项，分别对应可能需要的全局和本地字典</p>
+</blockquote>
+<h6 id="pow-x-y-z"><a href="#pow-x-y-z" class="headerlink" title="pow(x,y,z)"></a>pow(x,y,z)</h6><blockquote>
+<p>返回x的y次方对z的取模，z不存在则只求方</p>
+</blockquote>
+<h6 id="range-n"><a href="#range-n" class="headerlink" title="range(n)"></a>range(n)</h6><blockquote>
+<p>返回序列0,1,2,…,n-1，n为整数</p>
+</blockquote>
+<h6 id="sum"><a href="#sum" class="headerlink" title="sum()"></a>sum()</h6><blockquote>
+<p>返回序列所有值之和</p>
+</blockquote>
+<p><code>sum(iterable, start=0) </code> :iterable为不可变参数，设置start值可添加求和内</p>
+<h6 id="slice-start，end，step-1"><a href="#slice-start，end，step-1" class="headerlink" title="slice(start，end，step=1)"></a>slice(start，end，step=1)</h6><blockquote>
+<p>返回一个从start至end，步长为step值的非iterable序列</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/08/rdp%E4%BC%A0%E8%BE%93%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="XUE">
+      <meta itemprop="description" content="anyxue">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phoenix">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/08/rdp%E4%BC%A0%E8%BE%93%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">rdp传输的一些问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-08 10:38:24" itemprop="dateCreated datePublished" datetime="2022-02-08T10:38:24+08:00">2022-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-24 13:27:31" itemprop="dateModified" datetime="2022-02-24T13:27:31+08:00">2022-02-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3/" itemprop="url" rel="index"><span itemprop="name">运维相关</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在实际工作环境中，一般会操作跳板机运用rdp远程连接windows终端，有时也需要上传一些文件，或一些升级等比较费时的操作，同时也会有一些让人头疼的问题。</p>
+<h4 id="1-远程会话时效问题"><a href="#1-远程会话时效问题" class="headerlink" title="1.远程会话时效问题"></a>1.远程会话时效问题</h4><p>很多终端在无操作下会自动退出会话，如果你正在传输文件，那么╮(╯▽╰)╭╮(╯▽╰)╭╮(╯▽╰)╭……</p>
+<h5 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h5><p>win+r 命令行输入”gpedit.msc“,打开本地策略配置</p>
+<p>计算机配置 -&gt; 管理模板 -&gt; Windows组件 -&gt; 远程桌面服务 -&gt; 远程桌面会话主机 -&gt; 会话时间限制；</p>
+<p>编辑以下选项：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">设置已中断会话的时间限制</span><br><span class="line">设置活动但空闲的远程桌面服务会话的时间限制</span><br></pre></td></tr></table></figure>
+
+<p>配置为”启用“，将结束已断开的连接配置为”从不“</p>
+<p>重新连接会话</p>
+<h4 id="2-不能传输问题"><a href="#2-不能传输问题" class="headerlink" title="2.不能传输问题"></a>2.不能传输问题</h4><p>有时报错显示不能传输或传输没反应</p>
+<h5 id="解决-1"><a href="#解决-1" class="headerlink" title="解决"></a>解决</h5><p>重启rdpclip.exe进程：</p>
+<p>任务管理器，结束该任务，有的终端进程名称为”RDP剪贴板监视程序“。</p>
+<p>win+r 输入该进程名，重新启动</p>
+<h4 id="3-屏锁"><a href="#3-屏锁" class="headerlink" title="3.屏锁"></a>3.屏锁</h4><p>如果不知道口令，那么屏锁也是一个烦人的问题</p>
+<h5 id="解决-2"><a href="#解决-2" class="headerlink" title="解决"></a>解决</h5><p>控制面板—&gt;显示—&gt;更改屏幕保护程序—&gt;修改 <code>等待 值（分钟）</code></p>
+<h4 id="4-多会话问题"><a href="#4-多会话问题" class="headerlink" title="4.多会话问题"></a>4.多会话问题</h4><p>有时候会产生多个运行中会话，视情况删除</p>
+<h5 id="解决-3"><a href="#解决-3" class="headerlink" title="解决"></a>解决</h5><p>登录任意一个会话</p>
+<p>cmd输入命令：query session</p>
+<p>结束指定会话： logoff   session name | session ID</p>
+<p>连接指定对话： tscon session name | session ID</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/07/Python%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="XUE">
+      <meta itemprop="description" content="anyxue">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phoenix">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/07/Python%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">Python基础</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-07 13:04:41" itemprop="dateCreated datePublished" datetime="2022-02-07T13:04:41+08:00">2022-02-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-21 14:01:57" itemprop="dateModified" datetime="2022-02-21T14:01:57+08:00">2022-02-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>学习过许多语言基础，C，Java，PHP，可惜学得浅，又无开发经验，至今感觉仍跟没学一样。然本人对python垂涎已久，如今终于天时地利人和，只欠用功。那么就从Python开始，作为我正式步入开发领域的起点。</p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/02/0eadc851c267701c.jpg"></p>
+<hr>
+<h3 id="Python简介"><a href="#Python简介" class="headerlink" title="Python简介"></a>Python简介</h3><p>先简单说一下python，他由荷兰人Guido van Rossum于1989年发明，第一个公开发行版发行于1991年。是一门面向对象的解释型程序设计语言，具有开发效率高，跨平台，简单易学等优点。从设计之初就致力提升代码的可阅读性，崇尚优美、简单和清晰。强制缩进是python的一大特色，这点在3.x源码中有明显的体现。而且由于python易于嵌入和移植的特性，使他非常适合作为一种脚本语言，除了应用于开发领域，还能很好地契合运维和网络安全等领域的相关需求。</p>
+<p>由于身为解释型语言，python更适合开发应用程序。应用python的知名企业：Youtube、Dropbox、BT、Quora（中国知乎）、豆瓣、知乎、Google、Yahoo!、Facebook、NASA、百度、腾讯、汽车之家、美团等。</p>
+<p>python目前主要有四种解释器：</p>
+<ul>
+<li>Cpython：官方推荐解释器。可以转化成C语言能识别的字节码</li>
+<li>Jython: 可以转化成Java语言能识别的字节码</li>
+<li>IronPython：可以转化成.net语言能识别的字节码</li>
+<li>PyPy: 动态编译，可以显著提高Python代码的执行速度</li>
+</ul>
+<h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>基于python3</p>
+<h5 id="变量命名规则"><a href="#变量命名规则" class="headerlink" title="变量命名规则"></a>变量命名规则</h5><ul>
+<li>全部书由数字、字母和下划线组成</li>
+<li>不能以数字开头</li>
+<li>不能是python内置语法函数</li>
+<li>不能使用中文（但是有拼音啊~ 有兴趣的童鞋还可以了解一下”草莽“）</li>
+<li>不能过长</li>
+<li>要具有描述性</li>
+</ul>
+<h5 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h5><p>在python中，用名称大写的变量表示常量</p>
+<h5 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h5><ul>
+<li>单行注释符：#</li>
+<li>多行注释符：’’’neirong’’’  或者  “””内容”””</li>
+</ul>
+<h5 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h5><ul>
+<li>int（整数型）：值为整数</li>
+<li>float（浮点型）：值含小数点</li>
+<li>str（字符型）：值为任意字符串，且需加引号</li>
+<li>bool（布尔型）：值为True 或 False</li>
+</ul>
+<h5 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h5><h6 id="print"><a href="#print" class="headerlink" title="print"></a>print</h6><blockquote>
+<p>输出</p>
+</blockquote>
+<p><code>print</code>函数默认相邻值之间用空格分隔，设置<code>sep</code>属性可修改分隔符，打印内容结尾默认为换行符，设置<code>end</code>属性可替换末尾结束符，设置file属性可修改默认输出文件流（sys.stdout）</p>
+<h6 id="input"><a href="#input" class="headerlink" title="input"></a>input</h6><blockquote>
+<p> 输入</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># input 缺省值为字符型</span></span><br><span class="line">username = <span class="built_in">input</span>(<span class="string">&#x27;用户名：&#x27;</span>)</span><br><span class="line">password = <span class="built_in">input</span>(<span class="string">&#x27;密码：&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(username,<span class="built_in">type</span>(username))</span><br><span class="line"><span class="comment">#raw_input 捕获键盘字符</span></span><br><span class="line">a = raw_input()</span><br><span class="line"><span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
+
+<h6 id="if"><a href="#if" class="headerlink" title="if"></a>if</h6><blockquote>
+<p>流程判断控制</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#单独if</span></span><br><span class="line"><span class="keyword">if</span> <span class="number">2</span> &gt; <span class="number">1</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">2</span> &gt; <span class="number">1</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;yes&#x27;</span>)</span><br><span class="line"><span class="comment">#加else</span></span><br><span class="line"><span class="keyword">if</span> <span class="number">2</span> &lt; <span class="number">1</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">2</span>)</span><br><span class="line"><span class="comment">#加elif</span></span><br><span class="line">a = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&#x27;输入一个数&#x27;</span>))</span><br><span class="line"><span class="keyword">if</span> a == <span class="number">1</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">111</span>)</span><br><span class="line"><span class="keyword">elif</span> a == <span class="number">2</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">222</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">333</span>)</span><br><span class="line"><span class="comment">#嵌套if</span></span><br><span class="line"><span class="keyword">if</span> <span class="number">2</span> &gt; <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="number">1</span> = <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<h6 id="for…in…"><a href="#for…in…" class="headerlink" title="for…in…"></a>for…in…</h6><blockquote>
+<p>for循环</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#0到10整数之和</span></span><br><span class="line"><span class="built_in">sum</span> = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">11</span>):</span><br><span class="line">    <span class="built_in">sum</span> = x + <span class="built_in">sum</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sum</span>)</span><br></pre></td></tr></table></figure>
+
+<h6 id="while"><a href="#while" class="headerlink" title="while"></a>while</h6><blockquote>
+<p>while循环</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#0到10整数之和</span></span><br><span class="line"><span class="built_in">sum</span> = <span class="number">0</span></span><br><span class="line">n = <span class="number">10</span></span><br><span class="line"><span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">    <span class="built_in">sum</span> = <span class="built_in">sum</span> + n</span><br><span class="line">    n = n - <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sum</span>)</span><br></pre></td></tr></table></figure>
+
+<h6 id="break"><a href="#break" class="headerlink" title="break"></a>break</h6><blockquote>
+<p>结束循坏</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> n &lt;= <span class="number">100</span>:</span><br><span class="line">    <span class="keyword">if</span> n &gt; <span class="number">10</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="built_in">print</span>(n)</span><br><span class="line">    n = n + <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;end&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h6 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h6><blockquote>
+<p>跳过循环</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> n &lt; <span class="number">10</span>:</span><br><span class="line">    n = n + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="built_in">print</span>(n)</span><br></pre></td></tr></table></figure>
+
+<h6 id="list"><a href="#list" class="headerlink" title="list"></a>list</h6><blockquote>
+<p>有序列表</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">n = [<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(n[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(n[<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(n[-<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(n))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(n) - <span class="number">1</span>)</span><br><span class="line"><span class="comment">#插入元素</span></span><br><span class="line">n.apped(<span class="string">&#x27;s&#x27;</span>)   <span class="comment">#末尾追加元素</span></span><br><span class="line">n.insert(<span class="number">1</span>,<span class="string">&#x27;z&#x27;</span>)    <span class="comment">#指定索引1位置插入元素</span></span><br><span class="line"><span class="comment">#删除元素</span></span><br><span class="line">n.pop(<span class="number">1</span>)    <span class="comment">#删除索引1的元素</span></span><br><span class="line">n.pop()   <span class="comment">#默认删除末尾元素</span></span><br><span class="line"><span class="comment">#修改元素</span></span><br><span class="line">n[<span class="number">1</span>] = <span class="string">&#x27;p&#x27;</span></span><br><span class="line"><span class="comment">#列表元素也可以是列表</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h6><blockquote>
+<p>元组</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">n = (<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>)</span><br><span class="line"><span class="comment">#tuple元素不可变</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h6><blockquote>
+<p>字典</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#数据集格式：key-value</span></span><br><span class="line">n = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>,<span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>,<span class="string">&#x27;c&#x27;</span>:<span class="number">3</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(n[<span class="string">&#x27;a&#x27;</span>])</span><br><span class="line"><span class="comment">#插入key/修改value</span></span><br><span class="line">n[<span class="string">&#x27;d&#x27;</span>] = <span class="number">4</span></span><br><span class="line">n[<span class="string">&#x27;a&#x27;</span>] = <span class="number">5</span></span><br><span class="line"><span class="built_in">print</span>(n[<span class="string">&#x27;d&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(n[<span class="string">&#x27;a&#x27;</span>])</span><br><span class="line"><span class="comment">#删除key</span></span><br><span class="line">n.pop(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;a&#x27;</span> <span class="keyword">in</span> n)</span><br><span class="line"><span class="built_in">print</span>(n)</span><br><span class="line"><span class="comment">#key不存在返回指定值</span></span><br><span class="line"><span class="built_in">print</span>(n.get(<span class="string">&#x27;a&#x27;</span>,-<span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span>(n.get(<span class="string">&#x27;a&#x27;</span>))         <span class="comment">#默认None</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="set"><a href="#set" class="headerlink" title="set"></a>set</h6><blockquote>
+<p>无序无重复集</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#和dict的区别在于没有value</span></span><br><span class="line">n = <span class="built_in">set</span>([<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line"><span class="built_in">print</span>(n)</span><br><span class="line"><span class="comment">#添加元素</span></span><br><span class="line">n.add(<span class="number">4</span>)</span><br><span class="line"><span class="built_in">print</span>(n)</span><br><span class="line"><span class="comment">#删除元素</span></span><br><span class="line">n.remove(<span class="number">4</span>)</span><br><span class="line"><span class="built_in">print</span>(n)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -198,7 +868,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-02-06 17:17:10" itemprop="dateModified" datetime="2022-02-06T17:17:10+08:00">2022-02-06</time>
+      <time title="修改时间：2022-02-15 15:08:54" itemprop="dateModified" datetime="2022-02-15T15:08:54+08:00">2022-02-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -220,7 +890,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h4><p>(Cross-site request forgery，跨站请求伪造)。CSRF是Web应用程序的一种常见漏洞，其攻击特性是危害性大但非常隐蔽，尤其是在大量Web 2.0技术的应用背景下，攻击者完全可以在用户毫无察觉的情况下发起CSRF攻击。</p>
+          <p>注：本文仅限技术研究与讨论，严禁用于非法用途，否则产生的一切后果自行承担。</p>
+<h4 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h4><p>(Cross-site request forgery，跨站请求伪造)。CSRF是Web应用程序的一种常见漏洞，其攻击特性是危害性大但非常隐蔽，尤其是在大量Web 2.0技术的应用背景下，攻击者完全可以在用户毫无察觉的情况下发起CSRF攻击。</p>
 <h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>也叫点击攻击(‘on click’)，一般需点击后触发。主要由于程序员开发时，未对请求参数（比如token和referer等）进行判断，造成攻击者可以构造自己的URL地址并欺骗引诱目标用户点击。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 用户C打开浏览器，访问受信任网站A，输入用户名和密码请求登录网站A；</span><br><span class="line">2.在用户信息通过验证后，网站A产生Cookie信息并返回给浏览器，此时用户登录网站A成功，可以正常发送请求到网站A；</span><br><span class="line">3. 用户未退出网站A之前，在同一浏览器中，打开一个TAB页访问网站B；</span><br><span class="line">4. 网站B接收到用户请求后，返回一些攻击性代码，并发出一个请求要求访问第三方站点A；</span><br><span class="line">5. 浏览器在接收到这些攻击性代码后，根据网站B的请求，在用户不知情的情况下携带Cookie信息，向网站A发出请求。网站A并不知道该请求其实是由B发起的，所以会根据用户C的Cookie信息以C的权限处理该请求，导致来自网站B的恶意代码被执行。</span><br></pre></td></tr></table></figure>
 
@@ -312,7 +983,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-02-06 17:19:03" itemprop="dateModified" datetime="2022-02-06T17:19:03+08:00">2022-02-06</time>
+      <time title="修改时间：2022-02-15 15:08:40" itemprop="dateModified" datetime="2022-02-15T15:08:40+08:00">2022-02-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -334,7 +1005,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>shell是基于计算机的命令语言，同时又是一种程序设计语言。作为命令语言，它交互式解释和执行用户输入的命令或者自动地解释和执行预先设定好的一连串的命令；作为程序设计语言，它定义了各种变量和参数，并提供了许多在高级语言中才具有的控制结构，包括循环和分支。例如：windows的Powershell，linux的bash（Bourne Again Shell）。</p>
+          <p>注：本文仅限技术研究与讨论，严禁用于非法用途，否则产生的一切后果自行承担。</p>
+<p>shell是基于计算机的命令语言，同时又是一种程序设计语言。作为命令语言，它交互式解释和执行用户输入的命令或者自动地解释和执行预先设定好的一连串的命令；作为程序设计语言，它定义了各种变量和参数，并提供了许多在高级语言中才具有的控制结构，包括循环和分支。例如：windows的Powershell，linux的bash（Bourne Again Shell）。</p>
 <p>在渗透领域，最常见的shell有webshell、反弹shell和交互式shell。</p>
 <h4 id="WebShell"><a href="#WebShell" class="headerlink" title="WebShell"></a>WebShell</h4><p>webshell常常被称为匿名用户（入侵者）通过网站端口对网站服务器的某种程度上操作的权限。由 于webshell其大多是以动态脚本的形式出现，也有人称之为网站的后门工具。</p>
 <h5 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h5><p>根据脚本语言可分为PHP脚本木马，ASP脚本木马，也有.NET的脚本木马、JSP脚本木马和python编写的脚本木马。基于大小和功能，可分为大马、小马、一句话木马。</p>
@@ -536,7 +1208,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-02-06 17:18:42" itemprop="dateModified" datetime="2022-02-06T17:18:42+08:00">2022-02-06</time>
+      <time title="修改时间：2022-02-06 17:30:24" itemprop="dateModified" datetime="2022-02-06T17:30:24+08:00">2022-02-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -849,185 +1521,9 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/11/kali%E4%BC%98%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="XUE">
-      <meta itemprop="description" content="anyxue">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phoenix">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/12/11/kali%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">kali优化</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-12-11 20:24:42" itemprop="dateCreated datePublished" datetime="2021-12-11T20:24:42+08:00">2021-12-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-02-06 17:17:47" itemprop="dateModified" datetime="2022-02-06T17:17:47+08:00">2022-02-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">网络安全</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="Kali-简单优化"><a href="#Kali-简单优化" class="headerlink" title="Kali  简单优化"></a>Kali  简单优化</h3><h5 id="1-修改网卡"><a href="#1-修改网卡" class="headerlink" title="1.修改网卡"></a>1.修改网卡</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">基于2021版</span><br><span class="line"><span class="meta">#</span><span class="bash">切换root用户</span></span><br><span class="line">sudo su -</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">修改网卡文件</span></span><br><span class="line">vim /etc/network/interface</span><br><span class="line"></span><br><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.0.0.254</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.0.0.1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">修改服务</span></span><br><span class="line">systemctl stop NetworkManager.service</span><br><span class="line">systemctl disable NetworkManager.service</span><br><span class="line">systemctl restart networking</span><br><span class="line">systemctl start ssh</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-更新源"><a href="#2-更新源" class="headerlink" title="2.更新源"></a>2.更新源</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/apt/sources.list</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">中科大</span></span><br><span class="line">deb http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib</span><br><span class="line">deb-src http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">阿里云</span></span><br><span class="line"><span class="meta">#</span><span class="bash">deb http://mirrors.aliyun.com/kali kali-rolling main non-free contrib</span></span><br><span class="line"><span class="meta">#</span><span class="bash">deb-src http://mirrors.aliyun.com/kali kali-rolling main non-free contrib</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">清华大学</span></span><br><span class="line"><span class="meta">#</span><span class="bash">deb http://mirrors.tuna.tsinghua.edu.cn/kali kali-rolling main contrib non-free</span></span><br><span class="line"><span class="meta">#</span><span class="bash">deb-src https://mirrors.tuna.tsinghua.edu.cn/kali kali-rolling main contrib non-free</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">更新索引</span></span><br><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-查看版本"><a href="#3-查看版本" class="headerlink" title="3.查看版本"></a>3.查看版本</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">系统版本</span></span><br><span class="line">cat /etc/issue</span><br><span class="line">lsb_release -a     `（推荐）</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">内核信息</span></span><br><span class="line">uname -a</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">版本镜像下载</span></span><br><span class="line">http://old.kali.org/kali-images/     `（推荐）</span><br><span class="line">https://wizardforcel.gitbooks.io/kali-linux-doc/content/36.html   `（官方）</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">版本区别</span></span><br><span class="line">64 bit、32 bit、armhf、armel、i386、rpi等为不同的架构版本</span><br><span class="line">light为轻量版，VMware、virtualBox为虚拟机镜像版本</span><br><span class="line">GNOME、KDE、e17、Mate、LXDE、xfce为不同的桌面环境</span><br><span class="line">注：msf5为2019版</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">版本更新</span></span><br><span class="line">sudo su -</span><br><span class="line">apt update             #更新软件包列表</span><br><span class="line">apt full-upgrade -y    #完全更新</span><br><span class="line">apt dist-upgrade -y    #升级软件包并处理其依赖关系</span><br><span class="line">reboot                 #重启系统</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/08/first-blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="XUE">
-      <meta itemprop="description" content="anyxue">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phoenix">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/12/08/first-blog/" class="post-title-link" itemprop="url">First Blog</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-12-08 18:47:00" itemprop="dateCreated datePublished" datetime="2021-12-08T18:47:00+08:00">2021-12-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-02-06 17:18:05" itemprop="dateModified" datetime="2022-02-06T17:18:05+08:00">2022-02-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">网络安全</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>刚开始写博客，小白一枚，平时还算喜欢整理笔记，常常有些奇奇怪怪的想法，碍于性格内向，不善于表达。就从这里开始，记录技术&amp;成长</p>
-<p>试上高峰窥皓月，偶开天眼觑红尘~</p>
-<p>ps：为毛文章标题写不上中文？？？</p>
-<h3 id="First-Blog"><a href="#First-Blog" class="headerlink" title="First Blog"></a>First Blog</h3><h5 id="主题相关"><a href="#主题相关" class="headerlink" title="主题相关"></a>主题相关</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-theme-next@latest    #更新</span><br></pre></td></tr></table></figure>
-
-<h5 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">clean       #清楚缓存和静态文件</span><br><span class="line">--safe    #安全</span><br><span class="line">--silent     #简结</span><br><span class="line">--debug   #调试模式</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 </div>
   </main>

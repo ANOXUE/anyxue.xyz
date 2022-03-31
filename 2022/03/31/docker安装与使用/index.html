@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Docker简介 开源容器引擎，诞生于2013年初，基于go语言实现 对容器cgroup、namespace等底层技术进行了封装抽象 简单便捷，主流IT厂商支持 搭建靶场环境极其方便，适合网络安全人员研究，比如vulhub  docker组件 镜像（Image） 容器（Container） 仓库（Repository） 最大的公开仓库Docker Hub 国内公开仓库时速云、网易云 vulhub项">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker安装与使用">
+<meta property="og:url" content="http://example.com/2022/03/31/docker%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Phoenix">
+<meta property="og:description" content="Docker简介 开源容器引擎，诞生于2013年初，基于go语言实现 对容器cgroup、namespace等底层技术进行了封装抽象 简单便捷，主流IT厂商支持 搭建靶场环境极其方便，适合网络安全人员研究，比如vulhub  docker组件 镜像（Image） 容器（Container） 仓库（Repository） 最大的公开仓库Docker Hub 国内公开仓库时速云、网易云 vulhub项">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-31T05:35:10.000Z">
+<meta property="article:modified_time" content="2022-03-31T06:24:16.367Z">
+<meta property="article:author" content="XUE">
+<meta property="article:tag" content="基础篇">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/03/31/docker%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/03/31/docker%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/","path":"2022/03/31/docker安装与使用/","title":"docker安装与使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>docker安装与使用 | Phoenix</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Phoenix</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Xue's Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">Docker简介</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#docker%E7%BB%84%E4%BB%B6"><span class="nav-number">1.0.1.</span> <span class="nav-text">docker组件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#docker%E5%AE%89%E8%A3%85"><span class="nav-number">1.0.2.</span> <span class="nav-text">docker安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#docker-compose%E5%AE%89%E8%A3%85"><span class="nav-number">1.0.3.</span> <span class="nav-text">docker-compose安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.0.4.</span> <span class="nav-text">docker常用命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#docker-compose%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.0.5.</span> <span class="nav-text">docker-compose常用命令</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">XUE</p>
+  <div class="site-description" itemprop="description">anyxue</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/31/docker%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="XUE">
+      <meta itemprop="description" content="anyxue">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phoenix">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          docker安装与使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-03-31 13:35:10 / 修改时间：14:24:16" itemprop="dateCreated datePublished" datetime="2022-03-31T13:35:10+08:00">2022-03-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%BF%90%E7%BB%B4%E7%9B%B8%E5%85%B3/" itemprop="url" rel="index"><span itemprop="name">运维相关</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Docker简介"><a href="#Docker简介" class="headerlink" title="Docker简介"></a>Docker简介</h3><ul>
+<li>开源容器引擎，诞生于2013年初，基于go语言实现</li>
+<li>对容器cgroup、namespace等底层技术进行了封装抽象</li>
+<li>简单便捷，主流IT厂商支持</li>
+<li>搭建靶场环境极其方便，适合网络安全人员研究，比如<a target="_blank" rel="noopener" href="https://vulhub.org/">vulhub</a></li>
+</ul>
+<h5 id="docker组件"><a href="#docker组件" class="headerlink" title="docker组件"></a>docker组件</h5><ul>
+<li>镜像（Image）</li>
+<li>容器（Container）</li>
+<li>仓库（Repository）<ul>
+<li>最大的公开仓库<a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Hub</a></li>
+<li>国内公开仓库<a target="_blank" rel="noopener" href="https://hub.tenxcloud.com/">时速云</a>、<a target="_blank" rel="noopener" href="https://c.163.com/hub">网易云</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub">vulhub项目漏洞环境</a></li>
+</ul>
+</li>
+</ul>
+<h5 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h5><p>官方脚本安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL get.docker.com -0 get-docker.sh</span><br><span class="line">sudo sh get-docker.sh --mirror Aliyun</span><br></pre></td></tr></table></figure>
+
+<p>yum安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">卸载旧版本</span><br><span class="line">yum remove docker docker-common docker-selinux docker-engine</span><br><span class="line">安装依赖</span><br><span class="line">yum install -y yun-utils.noarch device-mapper-persistent-data.x86_64 lvm2</span><br><span class="line">设置docker源</span><br><span class="line">yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line">安装最新版docker</span><br><span class="line">yum install docker-ce docker-ce-cli containerd.io </span><br></pre></td></tr></table></figure>
+
+<h5 id="docker-compose安装"><a href="#docker-compose安装" class="headerlink" title="docker-compose安装"></a>docker-compose安装</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install python3 -y</span><br><span class="line">curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py</span><br><span class="line">python3 get-pip.py</span><br><span class="line">pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple docker-compose</span><br></pre></td></tr></table></figure>
+
+<h5 id="docker常用命令"><a href="#docker常用命令" class="headerlink" title="docker常用命令"></a>docker常用命令</h5><p>镜像操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker search xx	#查找xx镜像</span><br><span class="line">docker pull xx		#获取xx镜像</span><br><span class="line">docker images		#查看当前的镜像</span><br><span class="line">docker rmi $(docker images -q)  #删除所有镜像</span><br></pre></td></tr></table></figure>
+
+<p>容器操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a	#查看所有容器</span><br><span class="line">docker ps -a --no-trunc	#查看所有容器COMMAND ID</span><br><span class="line">docker run -t -i centos /bin/bash #启动镜像</span><br><span class="line">docker start/stop/rm COMMAND ID		#启动/停止/删除指定容器</span><br><span class="line">docker rm $(docker ps -aq)		#删除所有容器</span><br></pre></td></tr></table></figure>
+
+<h5 id="docker-compose常用命令"><a href="#docker-compose常用命令" class="headerlink" title="docker-compose常用命令"></a>docker-compose常用命令</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d		#构建并启动至后台</span><br><span class="line">docker-compose ps			#列出项目所有容器</span><br><span class="line">docker-compose top			#列出容器进程</span><br><span class="line">docker-compose down			#停止所有容器并移除网络</span><br><span class="line">docker-compose rm -fv		#删除所有容器（强制、磁盘挂载数据）</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80%E7%AF%87/" rel="tag"># 基础篇</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/31/CentOS%E9%83%A8%E7%BD%B2%E4%BC%98%E5%8C%96/" rel="prev" title="CentOS部署优化">
+                  <i class="fa fa-chevron-left"></i> CentOS部署优化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/31/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/" rel="next" title="应急响应基础（）">
+                  应急响应基础（） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XUE</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

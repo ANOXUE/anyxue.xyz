@@ -20,27 +20,28 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="刚开始写博客，小白一枚，平时还算喜欢整理笔记，常常有些奇奇怪怪的想法，碍于性格内向，不善于表达。就从这里开始，记录技术&amp;成长 试上高峰窥皓月，偶开天眼觑红尘~ ps：为毛文章标题写不上中文？？？ First Blog主题相关1npm install hexo-theme-next@latest    #更新  hexo1234clean       #清楚缓存和静态文件--safe">
+<meta name="description" content="应急响应基础Windows排查思路1.文件排查  文件时间Windows：创建时间，修改时间，访问时间Linux：stat指令状态时间（ctime）    ls -lc修改时间（mtime）   ls -l访问时间（atime） 敏感目录temp appdata windows localappdata 隐藏文件recent文件夹 预读取文件windows&#x2F;prefetch 2.系统排查 账户us">
 <meta property="og:type" content="article">
-<meta property="og:title" content="First Blog">
-<meta property="og:url" content="http://example.com/2021/12/08/first-blog/index.html">
+<meta property="og:title" content="应急响应基础（）">
+<meta property="og:url" content="http://example.com/2022/03/31/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="Phoenix">
-<meta property="og:description" content="刚开始写博客，小白一枚，平时还算喜欢整理笔记，常常有些奇奇怪怪的想法，碍于性格内向，不善于表达。就从这里开始，记录技术&amp;成长 试上高峰窥皓月，偶开天眼觑红尘~ ps：为毛文章标题写不上中文？？？ First Blog主题相关1npm install hexo-theme-next@latest    #更新  hexo1234clean       #清楚缓存和静态文件--safe">
+<meta property="og:description" content="应急响应基础Windows排查思路1.文件排查  文件时间Windows：创建时间，修改时间，访问时间Linux：stat指令状态时间（ctime）    ls -lc修改时间（mtime）   ls -l访问时间（atime） 敏感目录temp appdata windows localappdata 隐藏文件recent文件夹 预读取文件windows&#x2F;prefetch 2.系统排查 账户us">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-12-08T10:47:00.000Z">
-<meta property="article:modified_time" content="2022-02-06T09:38:11.634Z">
+<meta property="article:published_time" content="2022-03-31T06:45:33.000Z">
+<meta property="article:modified_time" content="2022-03-31T06:55:22.108Z">
 <meta property="article:author" content="XUE">
+<meta property="article:tag" content="基础篇">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2021/12/08/first-blog/">
+<link rel="canonical" href="http://example.com/2022/03/31/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/12/08/first-blog/","path":"2021/12/08/first-blog/","title":"First Blog"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/03/31/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/","path":"2022/03/31/应急响应基础/","title":"应急响应基础（）"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>First Blog | Phoenix</title>
+<title>应急响应基础（） | Phoenix</title>
   
 
 
@@ -108,7 +109,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#First-Blog"><span class="nav-number">1.</span> <span class="nav-text">First Blog</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E7%9B%B8%E5%85%B3"><span class="nav-number">1.0.1.</span> <span class="nav-text">主题相关</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hexo"><span class="nav-number">1.0.2.</span> <span class="nav-text">hexo</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">应急响应基础</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Windows%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF"><span class="nav-number">1.0.1.</span> <span class="nav-text">Windows排查思路</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%95%8F%E6%84%9F%E7%9B%AE%E5%BD%95"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">敏感目录</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">隐藏文件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%A2%84%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">1.0.1.3.</span> <span class="nav-text">预读取文件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%B4%A6%E6%88%B7"><span class="nav-number">1.0.1.4.</span> <span class="nav-text">账户</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E9%A1%B9"><span class="nav-number">1.0.1.5.</span> <span class="nav-text">启动项</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Windows%E6%97%A5%E5%BF%97%EF%BC%9A"><span class="nav-number">1.0.1.6.</span> <span class="nav-text">Windows日志：</span></a></li></ol></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -171,7 +172,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/08/first-blog/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/31/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -184,7 +185,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          First Blog
+          应急响应基础（）
         </h1>
 
         <div class="post-meta-container">
@@ -194,15 +195,18 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2021-12-08 18:47:00" itemprop="dateCreated datePublished" datetime="2021-12-08T18:47:00+08:00">2021-12-08</time>
+      <time title="创建时间：2022-03-31 14:45:33 / 修改时间：14:55:22" itemprop="dateCreated datePublished" datetime="2022-03-31T14:45:33+08:00">2022-03-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
+        <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-02-06 17:38:11" itemprop="dateModified" datetime="2022-02-06T17:38:11+08:00">2022-02-06</time>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">网络安全</span></a>
+        </span>
     </span>
 
   
@@ -215,19 +219,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>刚开始写博客，小白一枚，平时还算喜欢整理笔记，常常有些奇奇怪怪的想法，碍于性格内向，不善于表达。就从这里开始，记录技术&amp;成长</p>
-<p>试上高峰窥皓月，偶开天眼觑红尘~</p>
-<p>ps：为毛文章标题写不上中文？？？</p>
-<h3 id="First-Blog"><a href="#First-Blog" class="headerlink" title="First Blog"></a>First Blog</h3><h5 id="主题相关"><a href="#主题相关" class="headerlink" title="主题相关"></a>主题相关</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-theme-next@latest    #更新</span><br></pre></td></tr></table></figure>
-
-<h5 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">clean       #清楚缓存和静态文件</span><br><span class="line">--safe    #安全</span><br><span class="line">--silent     #简结</span><br><span class="line">--debug   #调试模式</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
+        <h3 id="应急响应基础"><a href="#应急响应基础" class="headerlink" title="应急响应基础"></a>应急响应基础</h3><h5 id="Windows排查思路"><a href="#Windows排查思路" class="headerlink" title="Windows排查思路"></a>Windows排查思路</h5><p>1.文件排查 </p>
+<p>文件时间<br>Windows：创建时间，修改时间，访问时间<br>Linux：stat指令<br>状态时间（ctime）    ls -lc<br>修改时间（mtime）   ls -l<br>访问时间（atime）</p>
+<h6 id="敏感目录"><a href="#敏感目录" class="headerlink" title="敏感目录"></a>敏感目录</h6><p>temp appdata windows localappdata</p>
+<h6 id="隐藏文件"><a href="#隐藏文件" class="headerlink" title="隐藏文件"></a>隐藏文件</h6><p>recent文件夹</p>
+<h6 id="预读取文件"><a href="#预读取文件" class="headerlink" title="预读取文件"></a>预读取文件</h6><p>windows/prefetch</p>
+<p>2.系统排查</p>
+<h6 id="账户"><a href="#账户" class="headerlink" title="账户"></a>账户</h6><p>user$ 隐藏账户 </p>
+<p>本地用户和组查看：lusrmgr.msc<br>wmic useraccount get name</p>
+<h6 id="启动项"><a href="#启动项" class="headerlink" title="启动项"></a>启动项</h6><p>本地组策略：gpedit.msc           Windows设置-脚本-启动<br>msinfo32       软件环境-启动程序<br>msconfig<br>计划任务<br>控制面版-系统安全-计划任务<br>schtasks</p>
+<p>3.进程排查</p>
+<p>4.服务排查</p>
+<h6 id="Windows日志："><a href="#Windows日志：" class="headerlink" title="Windows日志："></a>Windows日志：</h6><p>系统日志<br>安全日志：<br>ID<br>4624 成功      4625 失败<br>登录类型<br>2 交互式登录（Interactive）<br>3 网络（Network）<br>4 批处理（Batch）<br>5 服务（Service）<br>7 解锁（Unlock）<br>8 网络明文（NetworkCleartext）<br>9 新凭证（NewCredentials）<br>10 远程交互（RemoteInteractive）<br>11 缓存交互（CachedInteractive）<br>Microsoft-Windows-TerminalServices-LocalSessionManager 登录会话日志</p>
 
     </div>
 
@@ -236,16 +239,19 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80%E7%AF%87/" rel="tag"># 基础篇</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2022/03/31/docker%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" rel="prev" title="docker安装与使用">
+                  <i class="fa fa-chevron-left"></i> docker安装与使用
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/12/11/kali%E4%BC%98%E5%8C%96/" rel="next" title="kali优化">
-                  kali优化 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
